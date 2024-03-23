@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "type": "dotnet",
+      "task": "build pokemon-quiz-api",
+      "file": "/Users/svengiebelmann/Code/pokemon-quiz-api/pokemon-quiz-api.csproj",
+      "problemMatcher": [],
+      "label": "dotnet: watch pokemon-quiz-api"
+    }
+  ]
+}
