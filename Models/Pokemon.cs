@@ -6,7 +6,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace PokeQuiz;
+namespace PokeQuiz.Models;
 
 /// <summary>
 /// Pokémon sprite information

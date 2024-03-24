@@ -1,4 +1,4 @@
-namespace PokeQuiz;
+namespace PokeQuiz.Models;
 
 /// <summary>
 /// Types are properties for Pokémon and their moves. Each type has three
