@@ -7,7 +7,7 @@ using PokeQuiz.Models.PokeApi;
 namespace PokeQuiz;
 
 /// <summary>
-/// Gets data from the PokeAPI service
+/// Gets data from the PokeAPI.
 /// </summary>
 public class PokeApiClient : IDisposable
 {
@@ -21,56 +21,7 @@ public class PokeApiClient : IDisposable
     private readonly HttpClient _client;
 
     /// <summary>
-    /// Default constructor
-    /// </summary>
-    public PokeApiClient() : this(DefaultUserAgent)
-    {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PokeApiClient"/> with 
-    /// a given value for the `User-Agent` header
-    /// </summary>
-    /// <param name="userAgent">The value for the default `User-Agent` header.</param>
-    public PokeApiClient(ProductHeaderValue userAgent)
-    {
-        if (userAgent == null)
-        {
-            throw new ArgumentNullException(nameof(userAgent));
-        }
-
-        _client = new HttpClient() { BaseAddress = _baseUri };
-        _client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(userAgent));
-    }
-
-    /// <summary>
-    /// Constructor with message handler
-    /// </summary>
-    /// <param name="messageHandler">Message handler implementation</param>
-    public PokeApiClient(HttpMessageHandler messageHandler)
-        : this(messageHandler, DefaultUserAgent)
-    {
-    }
-
-    /// <summary>
-    /// Constructor with message handler and `User-Agent` header value
-    /// </summary>
-    /// <param name="messageHandler">Message handler implementation</param>
-    /// <param name="userAgent">The value for the default `User-Agent` header.</param>
-    public PokeApiClient(HttpMessageHandler messageHandler, ProductHeaderValue userAgent)
-    {
-        if (userAgent == null)
-        {
-            throw new ArgumentNullException(nameof(userAgent));
-        }
-
-        _client = new HttpClient(messageHandler) { BaseAddress = _baseUri };
-        _client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(userAgent));
-    }
-
-    /// <summary>
-    /// Construct accepting directly a HttpClient. Useful when used in projects where
-    /// IHttpClientFactory is used to create and configure HttpClient instances with different policies.
+    /// Construct accepting a HttpClient.
     /// See https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
     /// </summary>
     /// <param name="httpClient">HttpClient implementation</param>
@@ -114,7 +65,7 @@ public class PokeApiClient : IDisposable
     }
 
     /// <summary>
-    /// Gets a resource from a navigation url; resource is retrieved from cache if possible
+    /// Gets a resource from a navigation url
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
     /// <param name="url">Navigation url</param>
@@ -129,18 +80,17 @@ public class PokeApiClient : IDisposable
         string trimmedUrl = url.TrimEnd('/');
         string resourceId = trimmedUrl.Substring(trimmedUrl.LastIndexOf('/') + 1);
 
-        if (!int.TryParse(resourceId, out int id))
+        if (!int.TryParse(resourceId, out _))
         {
             // not sure what to do here...
             throw new NotSupportedException($"Navigation url '{url}' is in an unexpected format");
         }
 
         return await GetResourcesWithParamsAsync<T>(resourceId, cancellationToken);
-        ;
     }
 
     /// <summary>
-    /// Gets a resource by id; resource is retrieved from cache if possible
+    /// Gets a resource by id.
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
     /// <param name="id">Id of resource</param>
@@ -151,7 +101,7 @@ public class PokeApiClient : IDisposable
     }
 
     /// <summary>
-    /// Gets a resource by id; resource is retrieved from cache if possible
+    /// Gets a resource by id
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
     /// <param name="id">Id of resource</param>
@@ -161,11 +111,10 @@ public class PokeApiClient : IDisposable
         where T : ResourceBase
     {
         return await GetResourcesWithParamsAsync<T>(id.ToString(), cancellationToken);
-        ;
     }
 
     /// <summary>
-    /// Gets a resource by name; resource is retrieved from cache if possible. This lookup
+    /// Gets a resource by name. This lookup
     /// is case insensitive.
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
@@ -178,7 +127,7 @@ public class PokeApiClient : IDisposable
     }
 
     /// <summary>
-    /// Gets a resource by name; resource is retrieved from cache if possible. This lookup
+    /// Gets a resource by name. This lookup
     /// is case insensitive.
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
@@ -196,7 +145,6 @@ public class PokeApiClient : IDisposable
         // Nidoran is interesting as the API wants 'nidoran-f' or 'nidoran-m'
 
         return await GetResourcesWithParamsAsync<T>(sanitizedName, cancellationToken);
-        ;
     }
 
     /// <summary>

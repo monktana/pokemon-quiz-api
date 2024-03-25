@@ -1,17 +1,25 @@
-using System.Collections.Concurrent;
 using System.Net;
 using System.Text;
 
+/// <summary>
+/// Handles caching <see cref="HttpResponseMessage"/> as (JSON) files
+/// </summary>
 class FileCache : DelegatingHandler
 {
     private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
-    private ConcurrentDictionary<string, SemaphoreSlim> _locks = new();
 
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         return SendAsync(request, cancellationToken).Result;
     }
 
+    /// <summary>
+    /// Sends a request and caches the response.
+    /// The response is loaded from cache if possible.
+    /// </summary>
+    /// <param name="request">The intercepted requests</param>
+    /// <param name="cancellationToken">Cancellation token for the request</param>
+    /// <returns>The response data of the request</returns>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
@@ -22,8 +30,10 @@ class FileCache : DelegatingHandler
         if (File.Exists(cachePath))
         {
             string content;
-            await fileLock.WaitAsync(cancellationToken);
 
+            // used to prevent reading a file that's not (completely) written.
+            // can happen during parallel requests to the same resource, e.g. requesting the same (uncached) move twice.
+            await fileLock.WaitAsync(cancellationToken);
             try
             {
                 content = await File.ReadAllTextAsync(cachePath, cancellationToken);
