@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using PokeQuiz.Models.PokeApi;
 
-namespace PokeQuiz;
+namespace PokeQuiz.Clients;
 
 /// <summary>
 /// Gets data from the PokeAPI.
