@@ -1,4 +1,5 @@
-﻿namespace PokeQuiz.Models.PokeApi;
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+namespace PokeQuiz.Models.PokeApi;
 
 /// <summary>
 /// Methods by which the player might can encounter Pokémon

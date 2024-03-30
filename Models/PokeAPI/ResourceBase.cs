@@ -1,4 +1,7 @@
-﻿namespace PokeQuiz.Models.PokeApi;
+﻿// ReSharper disable UnassignedGetOnlyAutoProperty
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+namespace PokeQuiz.Models.PokeApi;
 
 /// <summary>
 /// The base class for classes that have an API endpoint. These
