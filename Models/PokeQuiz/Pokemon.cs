@@ -61,6 +61,26 @@ public class PokemonSprites
     /// </summary>
     [JsonPropertyName("back_shiny_female")]
     public string BackShinyFemale { get; set; }
+
+    /// <summary>
+    /// Maps a <see cref="PokeApi.PokemonSprites"/> to a <see cref="PokemonSprites"/>
+    /// </summary>
+    /// <param name="sprites">The PokeApi.PokemonSprites</param>
+    /// <returns>The PokeQuiz.PokemonSprites</returns>
+    public static PokemonSprites FromPokeApiResource(PokeApi.PokemonSprites sprites)
+    {
+        return new PokemonSprites
+        {
+            FrontDefault = sprites.FrontDefault,
+            FrontShiny = sprites.FrontShiny,
+            FrontFemale = sprites.FrontFemale,
+            FrontShinyFemale = sprites.FrontShinyFemale,
+            BackDefault = sprites.BackDefault,
+            BackShiny = sprites.BackShiny,
+            BackFemale = sprites.BackFemale,
+            BackShinyFemale = sprites.BackShinyFemale,
+        };
+    }
 };
 
 /// <summary>

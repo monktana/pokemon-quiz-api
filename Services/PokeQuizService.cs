@@ -55,16 +55,15 @@ public class PokeQuizService(HttpClient httpClient)
         await Task.WhenAll(tasks.species, tasks.moves, tasks.types);
         var (species, moves, types) = tasks;
 
-        var response = new Pokemon
+        return new Pokemon
         {
             Id = pokemon.Id,
             Name = pokemon.Name,
             Species = species.Result,
             Moves = moves.Result,
-            Types = types.Result
+            Types = types.Result,
+            Sprites = PokemonSprites.FromPokeApiResource(pokemon.Sprites)
         };
-
-        return response;
     }
 
     /// <summary>
