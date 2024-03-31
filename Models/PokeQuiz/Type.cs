@@ -2,10 +2,10 @@
 namespace PokeQuiz.Models.PokeQuiz;
 
 /// <summary>
-/// Types are properties for Pokémon and their moves. Each type has three
-/// properties: which types of Pokémon it is super effective against,
-/// which types of Pokémon it is not very effective against, and which types
-/// of Pokémon it is completely ineffective against.
+/// Types are properties for Pokémon and their moves. Each type can be
+/// super effective, effective, not very effective or completely ineffective against#
+/// another type.
+/// <remarks>The different type effectiveness are represented by <see cref="TypeEffectiveness"/></remarks>
 /// </summary>
 public class Type
 {
@@ -39,4 +39,15 @@ public class Type
                 .ToList()
         };
     }
+}
+
+/// <summary>
+/// Representation of the different type match ups.
+/// </summary>
+public enum TypeEffectiveness
+{
+    NoEffect,
+    NotVeryEffective,
+    Effective,
+    SuperEffective
 }

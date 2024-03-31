@@ -9,7 +9,7 @@ namespace PokeQuiz.Services;
 /// Gets data from PokeAPI and transforms it to the PokeQuiz models.
 /// </summary>
 /// <param name="httpClient">HttpClient implementation</param>
-public class PokeQuizService(HttpClient httpClient)
+public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typeService)
 {
     private readonly PokeApiClient _client = new(httpClient);
 
@@ -27,13 +27,15 @@ public class PokeQuizService(HttpClient httpClient)
 
         var (attacker, defender) = tasks;
 
-        var move = GetMove(attacker.Result);
+        var move = GetRandomAttackingMove(attacker.Result);
+        var effectiveness = typeService.CalculateEffectiveness(move.Type, defender.Result.Types);
 
         return new Matchup
         {
             Attacker = attacker.Result,
             Defender = defender.Result,
-            Move = move
+            Move = move,
+            Effectiveness = effectiveness
         };
     }
 
@@ -172,10 +174,15 @@ public class PokeQuizService(HttpClient httpClient)
         return (await Task.WhenAll(list)).ToList();
     }
 
-    private static Move GetMove(Pokemon pokemon)
+    /// <summary>
+    /// Get a random attacking <see cref="Models.PokeQuiz.Move"/> learned by the provided <see cref="Pokemon"/>
+    /// </summary>
+    /// <param name="pokemon">The <see cref="Pokemon"/> to get the move off</param>
+    /// <returns>The object representing the <see cref="Models.PokeQuiz.Move"/></returns>
+    private static Move GetRandomAttackingMove(Pokemon pokemon)
     {
         var attackingMoves = pokemon.Moves.FindAll(move => move.Power > 0).ToArray();
-        var random = (new Random()).Next(attackingMoves.Length);
+        var random = new Random().Next(attackingMoves.Length);
         return attackingMoves[random];
     }
 }

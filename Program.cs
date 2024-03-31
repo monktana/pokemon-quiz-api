@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<TypeEffectivenessService>();
 builder.Services.AddHttpClient<PokeQuizService>().AddHttpMessageHandler(_ => new FileCache());
 
 var app = builder.Build();
