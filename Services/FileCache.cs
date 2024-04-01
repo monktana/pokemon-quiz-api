@@ -4,7 +4,7 @@ using System.Text;
 /// <summary>
 /// Handles caching <see cref="HttpResponseMessage"/> as (JSON) files
 /// </summary>
-class FileCache : DelegatingHandler
+internal class FileCache : DelegatingHandler
 {
     private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
 

@@ -1,6 +1,5 @@
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using PokeQuiz.Models.PokeApi;
 
@@ -196,36 +195,6 @@ public class PokeApiClient : IDisposable
         where T : ResourceBase
     {
         return await GetResourceByUrlAsync<T>(urlResource.Url, cancellationToken);
-    }
-
-    /// <summary>
-    /// Gets all the named resources
-    /// </summary>
-    /// <typeparam name="T">The type of resource</typeparam>
-    /// <param name="cancellationToken">Cancellation token for the request; not utilized if data has been cached</param>
-    /// <returns>An async enumeration of the requested resources</returns>
-    public async IAsyncEnumerable<NamedApiResource<T>> GetAllNamedResourcesAsync<T>(
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        where T : NamedApiResource
-    {
-        string url = GetApiEndpointString<T>();
-        bool isLastPage;
-
-        do
-        {
-            var page = await GetAsync<NamedApiResourceList<T>>(url, cancellationToken);
-            foreach (var resource in page?.Results ?? Enumerable.Empty<NamedApiResource<T>>())
-            {
-                if (cancellationToken.IsCancellationRequested) break;
-                yield return resource;
-            }
-
-            isLastPage = page?.Next is null;
-            if (!isLastPage)
-            {
-                url = page!.Next!;
-            }
-        } while (!cancellationToken.IsCancellationRequested && !isLastPage);
     }
 
     /// <summary>
