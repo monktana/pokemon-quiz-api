@@ -16,12 +16,11 @@ public class TypeEffectivenessService
     }
 
     /// <summary>
-    /// Calculate the effectiveness of the attacking type against the defending types.
-    /// <remarks>The effectiveness is calculated against the defending types combined. Not against each.</remarks>
+    /// 
     /// </summary>
-    /// <param name="attacking">The attacking type</param>
-    /// <param name="defending">An Iterator of defending types</param>
-    /// <returns>The <see cref="TypeEffectiveness"/> of the attacking type against the defending</returns>
+    /// <param name="attacking"></param>
+    /// <param name="defending"></param>
+    /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public TypeEffectiveness CalculateEffectiveness(Type attacking, IEnumerable<Type> defending)
     {
