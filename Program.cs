@@ -6,7 +6,15 @@ using Type = PokeQuiz.Models.PokeQuiz.Type;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecific",
+        policy =>
+        {
+            policy.WithOrigins(builder.Configuration.GetValue<string>("AllowedOrigins"))
+                .AllowAnyHeader().AllowAnyMethod();
+        });
+});
 builder.Services.AddProblemDetails();
 
 builder.Services.AddSingleton<TypeEffectivenessService>();
@@ -26,8 +34,7 @@ app.UseStatusCodePages(async statusCodeContext
     => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode)
         .ExecuteAsync(statusCodeContext.HttpContext));
 
-app.UseCors(config =>
-    config.WithOrigins(app.Configuration.GetValue<string>("CORS:Origins")).AllowAnyHeader().AllowAnyMethod());
+app.UseCors("AllowSpecific");
 
 app.MapGet("/pokemon/{id}", async (string id, PokeQuizService service) => await service.GetPokemon(id))
     .WithName("GetPokemon")
