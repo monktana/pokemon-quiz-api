@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
 using PokeQuiz.Models.PokeApi;
@@ -10,12 +9,7 @@ namespace PokeQuiz.Clients;
 /// </summary>
 public class PokeApiClient : IDisposable
 {
-    /// <summary>
-    /// The default `User-Agent` header value used by instances of <see cref="PokeApiClient"/>.
-    /// </summary>
-    public static readonly ProductHeaderValue DefaultUserAgent = GetDefaultUserAgent();
-
-    private readonly Uri _baseUri = new Uri("https://pokeapi.co/api/v2/");
+    private readonly Uri _baseUri = new("https://pokeapi.co/api/v2/");
 
     private readonly HttpClient _client;
 
@@ -36,12 +30,7 @@ public class PokeApiClient : IDisposable
     public void Dispose()
     {
         _client.Dispose();
-    }
-
-    private static ProductHeaderValue GetDefaultUserAgent()
-    {
-        var version = typeof(PokeApiClient).Assembly.GetName().Version;
-        return new ProductHeaderValue("PokeApi", $"{version.Major}.{version.Minor}");
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>
@@ -55,10 +44,10 @@ public class PokeApiClient : IDisposable
     private async Task<T> GetResourcesWithParamsAsync<T>(string apiParam, CancellationToken cancellationToken)
         where T : ResourceBase
     {
-        // check for case sensitive API endpoint
-        bool isApiEndpointCaseSensitive = IsApiEndpointCaseSensitive<T>();
-        string sanitizedApiParam = isApiEndpointCaseSensitive ? apiParam : apiParam.ToLowerInvariant();
-        string apiEndpoint = GetApiEndpointString<T>();
+        // check for case-sensitive API endpoint
+        var isApiEndpointCaseSensitive = IsApiEndpointCaseSensitive<T>();
+        var sanitizedApiParam = isApiEndpointCaseSensitive ? apiParam : apiParam.ToLowerInvariant();
+        var apiEndpoint = GetApiEndpointString<T>();
 
         return await GetAsync<T>($"{apiEndpoint}/{sanitizedApiParam}/", cancellationToken);
     }
@@ -76,8 +65,8 @@ public class PokeApiClient : IDisposable
     {
         // need to parse out the id in order to check if it's cached.
         // navigation urls always use the id of the resource
-        string trimmedUrl = url.TrimEnd('/');
-        string resourceId = trimmedUrl.Substring(trimmedUrl.LastIndexOf('/') + 1);
+        var trimmedUrl = url.TrimEnd('/');
+        var resourceId = trimmedUrl[(trimmedUrl.LastIndexOf('/') + 1)..];
 
         if (!int.TryParse(resourceId, out _))
         {
@@ -136,7 +125,7 @@ public class PokeApiClient : IDisposable
     public async Task<T> GetResourceAsync<T>(string name, CancellationToken cancellationToken)
         where T : NamedApiResource
     {
-        string sanitizedName = name
+        var sanitizedName = name
             .Replace(" ", "-") // no resource can have a space in the name; API uses -'s in their place
             .Replace("'", "") // looking at you, Farfetch'd
             .Replace(".", ""); // looking at you, Mime Jr. and Mr. Mime

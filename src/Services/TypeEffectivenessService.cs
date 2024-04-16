@@ -36,7 +36,7 @@ public class TypeEffectivenessService
     /// <returns>The effectiveness value</returns>
     private float GetEffectiveness(Type attacking, Type defending)
     {
-        return _typeMatrix![attacking.Name][defending.Name];
+        return _typeMatrix[attacking.Name][defending.Name];
     }
 
     /// <summary>
