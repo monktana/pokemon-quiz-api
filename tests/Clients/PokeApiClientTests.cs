@@ -1,15 +1,41 @@
+using System.Net;
 using PokeQuiz.Clients;
 using PokeQuiz.Models.PokeApi;
+using RichardSzalay.MockHttp;
 
 namespace PokeQuiz.UnitTests.Clients;
 
 public class PokeApiClientTests
 {
-    [Fact]
-    public async Task GetResourceAsyncReturnsTheResourceById()
+    private PokeApiClient _client;
+
+    public PokeApiClientTests()
     {
-        var client = new PokeApiClient(new HttpClient());
-        var resource = await client.GetResourceAsync<Pokemon>(1);
+        var mockHttp = new MockHttpMessageHandler();
+        {
+            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/1.json"));
+            mockHttp.When("https://pokeapi.co/api/v2/pokemon/1/").Respond("application/json", response);
+            mockHttp.When("https://pokeapi.co/api/v2/pokemon/bulbasaur/").Respond("application/json", response);
+        }
+
+        {
+            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/4.json"));
+            mockHttp.When("https://pokeapi.co/api/v2/pokemon/4/").Respond("application/json", response);
+        }
+
+        _client = new PokeApiClient(mockHttp.ToHttpClient());
+    }
+
+    [Fact]
+    public void PokeApiClient_CanBeDisposed()
+    {
+        using var client = new PokeApiClient(new HttpClient());
+    }
+
+    [Fact]
+    public async Task GetResourceAsync_ReturnsTheResourceById()
+    {
+        var resource = await _client.GetResourceAsync<Pokemon>(1);
 
         Assert.IsType<Pokemon>(resource);
         Assert.Equal(1, resource.Id);
@@ -17,10 +43,9 @@ public class PokeApiClientTests
     }
 
     [Fact]
-    public async Task GetResourceAsyncReturnsTheResourceByName()
+    public async Task GetResourceAsync_ReturnsTheResourceByName()
     {
-        var client = new PokeApiClient(new HttpClient());
-        var resource = await client.GetResourceAsync<Pokemon>("bulbasaur");
+        var resource = await _client.GetResourceAsync<Pokemon>("bulbasaur");
 
         Assert.IsType<Pokemon>(resource);
         Assert.Equal(1, resource.Id);
@@ -28,16 +53,35 @@ public class PokeApiClientTests
     }
 
     [Fact]
-    public async Task GetResourceAsyncReturnsAListOfResources()
+    public async Task GetResourceAsync_ReturnsTheResourceByUrl()
     {
-        var client = new PokeApiClient(new HttpClient());
+        var resource = await _client.GetResourceAsync(new NamedApiResource<Pokemon> { Url = "https://pokeapi.co/api/v2/pokemon/1" });
+
+        Assert.IsType<Pokemon>(resource);
+        Assert.Equal(1, resource.Id);
+        Assert.Equal("bulbasaur", resource.Name);
+    }
+
+    [Fact]
+    public async Task GetResourceAsyncByUrl_ThrowsOnInvalidUrlFormat()
+    {
+        await Assert.ThrowsAsync<NotSupportedException>(async () =>
+        {
+            await _client.GetResourceAsync(new NamedApiResource<Pokemon>
+                { Url = "https://pokeapi.co/api/v2/pokemon/snasen" });
+        });
+    }
+
+    [Fact]
+    public async Task GetResourceAsync_ReturnsAListOfResources()
+    {
         var urlList = new List<NamedApiResource<Pokemon>>
         {
-            new() { Url = "http://pokeapi.co/api/v2/pokemon/1", Name = "bulbasaur" },
-            new() { Url = "http://pokeapi.co/api/v2/pokemon/4", Name = "charmander" }
+            new() { Url = "https://pokeapi.co/api/v2/pokemon/1", Name = "bulbasaur" },
+            new() { Url = "https://pokeapi.co/api/v2/pokemon/4", Name = "charmander" }
         };
 
-        var resources = await client.GetResourceAsync(urlList);
+        var resources = await _client.GetResourceAsync(urlList);
 
         Assert.IsType<List<Pokemon>>(resources);
 
@@ -46,5 +90,16 @@ public class PokeApiClientTests
             Assert.IsType<Pokemon>(resources[i]);
             Assert.Equal(urlList[i].Name, resources[i].Name);
         }
+    }
+
+    [Fact]
+    public async Task GetResourceAsync_ThrowsOnUnsuccessfulResponse()
+    {
+        var mockHttp = new MockHttpMessageHandler();
+        mockHttp.When("https://pokeapi.co/api/v2/pokemon/*").Respond(HttpStatusCode.NotFound);
+
+        var client = new PokeApiClient(mockHttp.ToHttpClient());
+
+        await Assert.ThrowsAsync<HttpRequestException>(async () => { await client.GetResourceAsync<Pokemon>(1); });
     }
 }
