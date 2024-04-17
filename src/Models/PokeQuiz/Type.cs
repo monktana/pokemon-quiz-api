@@ -1,3 +1,5 @@
+using PokeQuiz.Extensions;
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 namespace PokeQuiz.Models.PokeQuiz;
 
@@ -7,7 +9,7 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// another type.
 /// <remarks>The different type effectiveness are represented by <see cref="TypeEffectiveness"/></remarks>
 /// </summary>
-public class Type
+public class Type : IDeserializable<PokeApi.Type>
 {
     /// <summary>
     /// The identifier for this resource.
@@ -29,15 +31,11 @@ public class Type
     /// </summary>
     /// <param name="type">The PokeApi.Type</param>
     /// <returns>The PokeQuiz.Type</returns>
-    public static Type FromPokeApiResource(PokeApi.Type type)
+    public void FromPokeApiResource(PokeApi.Type pokeApiType)
     {
-        return new Type
-        {
-            Id = type.Id,
-            Name = type.Name,
-            Names = type.Names.Select(name => new InternationalName { Name = name.Name, Language = name.Language.Name })
-                .ToList()
-        };
+        Id = pokeApiType.Id;
+        Name = pokeApiType.Name;
+        Names = pokeApiType.Names.Select(name => new InternationalName { Name = name.Name, Language = name.Language.Name }).ToList();
     }
 }
 
