@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddProblemDetails();
 
-builder.Services.AddSingleton<TypeEffectivenessService>();
+builder.Services.AddSingleton<TypeEffectivenessService>(_ => new TypeEffectivenessService(Path.Join(Directory.GetCurrentDirectory(), "Data", "PokemonTypeMatrix.json")));
 builder.Services.AddHttpClient<PokeQuizService>().AddHttpMessageHandler(_ => new FileCache());
 
 var app = builder.Build();
