@@ -1,9 +1,11 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using PokeQuiz.Extensions;
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 namespace PokeQuiz.Models.PokeQuiz;
 
-public class Move
+public class Move : IDeserializable<PokeApi.Move>
 {
     /// <summary>
     /// The identifier for this resource.
@@ -36,15 +38,17 @@ public class Move
     /// </summary>
     /// <param name="move">The PokeApi.Move</param>
     /// <returns>The PokeQuiz.PokemonSpecies</returns>
-    public static Move FromPokeApiResource(PokeApi.Move move)
+    public void FromPokeApiResource(PokeApi.Move move)
     {
-        return new Move
-        {
-            Id = move.Id,
-            Name = move.Name,
-            Names = move.Names.Select(name => new InternationalName { Name = name.Name, Language = name.Language.Name })
-                .ToList(),
-            Power = move.Power,
-        };
+        Id = move.Id;
+        Name = move.Name;
+        Names = move.Names.Select(name =>
+            {
+                var internationalName = new InternationalName();
+                internationalName.FromPokeApiResource(name);
+                return internationalName;
+            })
+            .ToList();
+        Power = move.Power ?? 0;
     }
 }

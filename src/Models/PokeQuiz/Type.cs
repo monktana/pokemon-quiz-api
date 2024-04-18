@@ -31,11 +31,16 @@ public class Type : IDeserializable<PokeApi.Type>
     /// </summary>
     /// <param name="type">The PokeApi.Type</param>
     /// <returns>The PokeQuiz.Type</returns>
-    public void FromPokeApiResource(PokeApi.Type pokeApiType)
+    public void FromPokeApiResource(PokeApi.Type type)
     {
-        Id = pokeApiType.Id;
-        Name = pokeApiType.Name;
-        Names = pokeApiType.Names.Select(name => new InternationalName { Name = name.Name, Language = name.Language.Name }).ToList();
+        Id = type.Id;
+        Name = type.Name;
+        Names = type.Names.Select(name =>
+        {
+            var internationalName = new InternationalName();
+            internationalName.FromPokeApiResource(name);
+            return internationalName;
+        }).ToList();
     }
 }
 

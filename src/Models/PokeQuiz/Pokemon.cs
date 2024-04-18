@@ -6,13 +6,14 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 using System.Text.Json.Serialization;
+using PokeQuiz.Extensions;
 
 namespace PokeQuiz.Models.PokeQuiz;
 
 /// <summary>
 /// Pokémon sprite information
 /// </summary>
-public class PokemonSprites
+public class PokemonSprites : IDeserializable<PokeApi.PokemonSprites>
 {
     /// <summary>
     /// The default depiction of this Pokémon from the front in battle.
@@ -67,19 +68,16 @@ public class PokemonSprites
     /// </summary>
     /// <param name="sprites">The PokeApi.PokemonSprites</param>
     /// <returns>The PokeQuiz.PokemonSprites</returns>
-    public static PokemonSprites FromPokeApiResource(PokeApi.PokemonSprites sprites)
+    public void FromPokeApiResource(PokeApi.PokemonSprites sprites)
     {
-        return new PokemonSprites
-        {
-            FrontDefault = sprites.FrontDefault,
-            FrontShiny = sprites.FrontShiny,
-            FrontFemale = sprites.FrontFemale,
-            FrontShinyFemale = sprites.FrontShinyFemale,
-            BackDefault = sprites.BackDefault,
-            BackShiny = sprites.BackShiny,
-            BackFemale = sprites.BackFemale,
-            BackShinyFemale = sprites.BackShinyFemale,
-        };
+        FrontDefault = sprites.FrontDefault;
+        FrontShiny = sprites.FrontShiny;
+        FrontFemale = sprites.FrontFemale;
+        FrontShinyFemale = sprites.FrontShinyFemale;
+        BackDefault = sprites.BackDefault;
+        BackShiny = sprites.BackShiny;
+        BackFemale = sprites.BackFemale;
+        BackShinyFemale = sprites.BackShinyFemale;
     }
 };
 
@@ -90,7 +88,7 @@ public class PokemonSprites
 /// can be found in three different varieties, Wormadam-Trash,
 /// Wormadam-Sandy and Wormadam-Plant.
 /// </summary>
-public class PokemonSpecies
+public class PokemonSpecies : IDeserializable<PokeApi.PokemonSpecies>
 {
     /// <summary>
     /// The identifier for this resource.
@@ -112,15 +110,16 @@ public class PokemonSpecies
     /// </summary>
     /// <param name="species">The PokeApi.Type</param>
     /// <returns>The PokeQuiz.PokemonSpecies</returns>
-    public static PokemonSpecies FromPokeApiResource(PokeApi.PokemonSpecies species)
+    public void FromPokeApiResource(PokeApi.PokemonSpecies species)
     {
-        return new PokemonSpecies
+        Id = species.Id;
+        Name = species.Name;
+        Names = species.Names.Select(name =>
         {
-            Id = species.Id,
-            Name = species.Name,
-            Names = species.Names.Select(name => new InternationalName
-                { Name = name.Name, Language = name.Language.Name }).ToList()
-        };
+            var internationalName = new InternationalName();
+            internationalName.FromPokeApiResource(name);
+            return internationalName;
+        }).ToList();
     }
 }
 

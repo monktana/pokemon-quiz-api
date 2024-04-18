@@ -57,6 +57,9 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
         await Task.WhenAll(tasks.species, tasks.moves, tasks.types);
         var (species, moves, types) = tasks;
 
+        var sprites = new PokemonSprites();
+        sprites.FromPokeApiResource(pokemon.Sprites);
+
         return new Pokemon
         {
             Id = pokemon.Id,
@@ -64,7 +67,7 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
             Species = species.Result,
             Moves = moves.Result,
             Types = types.Result,
-            Sprites = PokemonSprites.FromPokeApiResource(pokemon.Sprites)
+            Sprites = sprites
         };
     }
 
@@ -85,7 +88,10 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     /// <returns>The object representing the <see cref="PokemonSpecies"/></returns>
     public async Task<PokeQuizModels.PokemonSpecies> GetSpecies(string name)
     {
-        return PokemonSpecies.FromPokeApiResource(await _client.GetResourceAsync<Models.PokeApi.PokemonSpecies>(name));
+        var pokeApiSpecies = await _client.GetResourceAsync<PokeAPIModels.PokemonSpecies>(name);
+        var species = new PokemonSpecies();
+        species.FromPokeApiResource(pokeApiSpecies);
+        return species;
     }
 
     /// <summary>
@@ -105,7 +111,10 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     /// <returns>The object representing the <see cref="Models.PokeQuiz.Type"/></returns>
     public async Task<PokeQuizModels.Type> GetType(string name)
     {
-        return PokeQuizModels.Type.FromPokeApiResource(await _client.GetResourceAsync<PokeAPIModels.Type>(name));
+        var pokeApiType = await _client.GetResourceAsync<PokeAPIModels.Type>(name);
+        var type = new PokeQuizModels.Type();
+        type.FromPokeApiResource(pokeApiType);
+        return type;
     }
 
     /// <summary>
@@ -135,7 +144,17 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     /// <returns>The object representing the <see cref="Models.PokeQuiz.Move"/></returns>
     public async Task<PokeQuizModels.Move> GetMove(string name)
     {
-        return PokeQuizModels.Move.FromPokeApiResource(await _client.GetResourceAsync<PokeAPIModels.Move>(name));
+        var pokeApiMove = await _client.GetResourceAsync<PokeAPIModels.Move>(name);
+        var move = new Move();
+        move.FromPokeApiResource(pokeApiMove);
+
+        var pokeApiType = await _client.GetResourceAsync(pokeApiMove.Type);
+        var type = new PokeQuizModels.Type();
+        type.FromPokeApiResource(pokeApiType);
+
+        move.Type = type;
+
+        return move;
     }
 
     /// <summary>
@@ -151,23 +170,30 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     /// <summary>
     /// Get a list of <see cref="Models.PokeQuiz.Move"/> by name
     /// </summary>
-    /// <param name="moves">The list of <see cref="Models.PokeQuiz.Move"/> names</param>
+    /// <param name="moveNames">The list of <see cref="Models.PokeQuiz.Move"/> names</param>
     /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Move"/>s</returns>
-    private async Task<List<Move>> GetMoves(IEnumerable<string> moves)
+    private async Task<List<Move>> GetMoves(IEnumerable<string> moveNames)
     {
         var list = new List<Task<Move>>();
-        foreach (var move in moves)
+        foreach (var moveName in moveNames)
         {
-            var fullMove = _client.GetResourceAsync<PokeAPIModels.Move>(move).Result;
-            var type = _client.GetResourceAsync(fullMove.Type).Result;
+            var move = _client.GetResourceAsync<PokeAPIModels.Move>(moveName).Result;
+            var pokeApiType = _client.GetResourceAsync(move.Type).Result;
+            var type = new PokeQuizModels.Type();
+            type.FromPokeApiResource(pokeApiType);
 
             list.Add(Task.FromResult(new Move
             {
-                Id = fullMove.Id,
-                Name = fullMove.Name,
-                Names = fullMove.Names.Select(InternationalName.FromPokeApiResource).ToList(),
-                Power = fullMove.Power,
-                Type = PokeQuizModels.Type.FromPokeApiResource(type),
+                Id = move.Id,
+                Name = move.Name,
+                Names = move.Names.Select(name =>
+                {
+                    var internationalName = new InternationalName();
+                    internationalName.FromPokeApiResource(name);
+                    return internationalName;
+                }).ToList(),
+                Power = move.Power,
+                Type = type,
             }));
         }
 
