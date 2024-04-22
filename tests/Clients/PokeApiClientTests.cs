@@ -7,20 +7,21 @@ namespace PokeQuiz.UnitTests.Clients;
 
 public class PokeApiClientTests
 {
-    private PokeApiClient _client;
+    private readonly PokeApiClient _client;
 
     public PokeApiClientTests()
     {
         var mockHttp = new MockHttpMessageHandler();
         {
-            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/1.json"));
+            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/bulbasaur.json"));
             mockHttp.When("https://pokeapi.co/api/v2/pokemon/1/").Respond("application/json", response);
             mockHttp.When("https://pokeapi.co/api/v2/pokemon/bulbasaur/").Respond("application/json", response);
         }
 
         {
-            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/4.json"));
+            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/charmander.json"));
             mockHttp.When("https://pokeapi.co/api/v2/pokemon/4/").Respond("application/json", response);
+            mockHttp.When("https://pokeapi.co/api/v2/pokemon/charmander/").Respond("application/json", response);
         }
 
         _client = new PokeApiClient(mockHttp.ToHttpClient());

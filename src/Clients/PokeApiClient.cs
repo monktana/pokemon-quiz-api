@@ -196,16 +196,15 @@ public class PokeApiClient : IDisposable
             await _client.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
 
         response.EnsureSuccessStatusCode();
-        return DeserializeStream<T>(await response.Content.ReadAsStreamAsync());
+        return DeserializeContent<T>(await response.Content.ReadAsStringAsync());
     }
 
     /// <summary>
     /// Handles deserialization of a given stream to a given type
     /// </summary>
-    private T? DeserializeStream<T>(Stream stream)
+    private T? DeserializeContent<T>(string content)
     {
-        using var sr = new System.IO.StreamReader(stream);
-        return JsonSerializer.Deserialize<T>(stream,
+        return JsonSerializer.Deserialize<T>(content,
             new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower });
     }
 
