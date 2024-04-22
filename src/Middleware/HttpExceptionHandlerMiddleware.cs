@@ -12,13 +12,14 @@ public class HttpExceptionHandlerMiddleware(RequestDelegate next)
         }
         catch (Exception exception)
         {
-            if (exception is not HttpRequestException { StatusCode: HttpStatusCode.NotFound })
+            if (exception is not HttpRequestException httpRequestException) throw;
+            if (httpRequestException.StatusCode == HttpStatusCode.NotFound)
             {
-                await Results.Problem().ExecuteAsync(httpContext);
+                await Results.NotFound().ExecuteAsync(httpContext);
             }
             else
             {
-                await Results.NotFound().ExecuteAsync(httpContext);
+                await Results.Problem(statusCode: (int?)httpRequestException.StatusCode).ExecuteAsync(httpContext);
             }
         }
     }

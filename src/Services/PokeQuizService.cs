@@ -8,7 +8,7 @@ namespace PokeQuiz.Services;
 /// Gets data from PokeAPI and transforms it to the PokeQuiz models.
 /// </summary>
 /// <param name="httpClient">HttpClient implementation</param>
-public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typeService)
+public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typeService) : IPokeQuizService
 {
     private readonly PokeApiClient _client = new(httpClient);
 
@@ -94,16 +94,6 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     }
 
     /// <summary>
-    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by id.
-    /// </summary>
-    /// <param name="id">The id of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
-    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
-    private async Task<PokeQuizModels.PokemonSpecies> GetSpecies(int id)
-    {
-        return await GetSpecies(id.ToString());
-    }
-
-    /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Type"/> by name
     /// </summary>
     /// <param name="name">The name of the <see cref="Models.PokeQuiz.Type"/></param>
@@ -124,16 +114,6 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     public async Task<PokeQuizModels.Type> GetType(int id)
     {
         return await GetType(id.ToString());
-    }
-
-    /// <summary>
-    /// Get a list of <see cref="Models.PokeQuiz.Type"/> by name
-    /// </summary>
-    /// <param name="types">The list of <see cref="Models.PokeQuiz.Type"/> names</param>
-    /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Type"/>s</returns>
-    private async Task<List<PokeQuizModels.Type>> GetTypes(IEnumerable<string> types)
-    {
-        return (await Task.WhenAll(types.Select(GetType))).ToList();
     }
 
     /// <summary>
@@ -164,6 +144,26 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     public async Task<PokeQuizModels.Move> GetMove(int id)
     {
         return await GetMove(id.ToString());
+    }
+
+    /// <summary>
+    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by id.
+    /// </summary>
+    /// <param name="id">The id of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
+    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
+    private async Task<PokeQuizModels.PokemonSpecies> GetSpecies(int id)
+    {
+        return await GetSpecies(id.ToString());
+    }
+
+    /// <summary>
+    /// Get a list of <see cref="Models.PokeQuiz.Type"/> by name
+    /// </summary>
+    /// <param name="types">The list of <see cref="Models.PokeQuiz.Type"/> names</param>
+    /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Type"/>s</returns>
+    private async Task<List<PokeQuizModels.Type>> GetTypes(IEnumerable<string> types)
+    {
+        return (await Task.WhenAll(types.Select(GetType))).ToList();
     }
 
     /// <summary>
