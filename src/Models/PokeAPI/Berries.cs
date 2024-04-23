@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -8,6 +9,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Berries are small fruits that can provide HP and status condition restoration,
 /// stat enhancement, and even damage negation when eaten by Pokémon.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Berry : NamedApiResource
 {
     /// <summary>
@@ -93,6 +95,7 @@ public record Berry : NamedApiResource
 /// <summary>
 /// The potency and flavor that a berry can have
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record BerryFlavorMap
 {
     /// <summary>
@@ -110,6 +113,7 @@ public record BerryFlavorMap
 /// <summary>
 /// Berries can be soft or hard.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record BerryFirmness : NamedApiResource
 {
     /// <summary>
@@ -140,6 +144,7 @@ public record BerryFirmness : NamedApiResource
 /// Flavors determine whether a Pokémon will benefit or suffer from eating
 /// a berry based on their nature.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record BerryFlavor : NamedApiResource
 {
     /// <summary>
@@ -175,6 +180,7 @@ public record BerryFlavor : NamedApiResource
 /// <summary>
 /// The potency and flavor that a berry can have
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record FlavorBerryMap
 {
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -7,6 +8,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// <summary>
 /// Languages for translations of API resource information.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Language : NamedApiResource
 {
     /// <summary>
@@ -53,6 +55,7 @@ public record Language : NamedApiResource
 /// A reference to an API object that does not have a `Name` property
 /// </summary>
 /// <typeparam name="T">The type of resource</typeparam>
+[ExcludeFromCodeCoverage]
 public record ApiResource<T> : UrlNavigation<T> where T : ResourceBase
 {
 }
@@ -60,6 +63,7 @@ public record ApiResource<T> : UrlNavigation<T> where T : ResourceBase
 /// <summary>
 /// The description for an API resource
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Descriptions
 {
     /// <summary>
@@ -77,6 +81,7 @@ public record Descriptions
 /// <summary>
 /// The effect of an API resource
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Effects
 {
     /// <summary>
@@ -94,6 +99,7 @@ public record Effects
 /// <summary>
 /// Encounter information for a Pokémon
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Encounter
 {
     /// <summary>
@@ -129,6 +135,7 @@ public record Encounter
 /// <summary>
 /// A flavor text entry for an API resource
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record FlavorTexts
 {
     /// <summary>
@@ -146,6 +153,7 @@ public record FlavorTexts
 /// <summary>
 /// The index information for a generation game
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record GenerationGameIndex
 {
     /// <summary>
@@ -163,6 +171,7 @@ public record GenerationGameIndex
 /// <summary>
 /// The version detail information for a machine
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MachineVersionDetail
 {
     /// <summary>
@@ -180,6 +189,7 @@ public record MachineVersionDetail
 /// <summary>
 /// A name with language information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Names
 {
     /// <summary>
@@ -197,6 +207,7 @@ public record Names
 /// A reference to an API resource that has a `Name` property
 /// </summary>
 /// <typeparam name="T">The type of reference</typeparam>
+[ExcludeFromCodeCoverage]
 public record NamedApiResource<T> : UrlNavigation<T> where T : ResourceBase
 {
     /// <summary>
@@ -209,6 +220,7 @@ public record NamedApiResource<T> : UrlNavigation<T> where T : ResourceBase
 /// Class representing data from a previous generation.
 /// </summary>
 /// <typeparam name="TData">The type of the data.</typeparam>
+[ExcludeFromCodeCoverage]
 public record PastGenerationData<TData>
 {
     /// <summary>
@@ -225,6 +237,7 @@ public record PastGenerationData<TData>
 /// <summary>
 /// The long text for effect text entries
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record VerboseEffect
 {
     /// <summary>
@@ -248,6 +261,7 @@ public record VerboseEffect
 /// <summary>
 /// The detailed information for version encounter entries
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record VersionEncounterDetail
 {
     /// <summary>
@@ -271,6 +285,7 @@ public record VersionEncounterDetail
 /// <summary>
 /// The index information for games
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record VersionGameIndex
 {
     /// <summary>
@@ -288,6 +303,7 @@ public record VersionGameIndex
 /// <summary>
 /// The version group flavor text information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record VersionGroupFlavorText
 {
     /// <summary>

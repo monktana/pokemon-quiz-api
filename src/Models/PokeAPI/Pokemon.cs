@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -9,6 +10,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// the overworld. Pokémon have multiple possible abilities but
 /// can have only one ability at a time.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Ability : NamedApiResource
 {
     /// <summary>
@@ -66,6 +68,7 @@ public record Ability : NamedApiResource
 /// <summary>
 /// An ability and it's associated versions
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record AbilityEffectChange
 {
     /// <summary>
@@ -84,6 +87,7 @@ public record AbilityEffectChange
 /// <summary>
 /// The flavor text for an ability
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record AbilityFlavorText
 {
     /// <summary>
@@ -107,6 +111,7 @@ public record AbilityFlavorText
 /// <summary>
 /// A mapping of an ability to a possible Pokémon
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record AbilityPokemon
 {
     /// <summary>
@@ -133,6 +138,7 @@ public record AbilityPokemon
 /// A Pokémon's Characteristic is determined by the remainder of its
 /// highest IV divided by 5 (gene_modulo).
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Characteristic : ApiResource
 {
     /// <summary>
@@ -171,6 +177,7 @@ public record Characteristic : ApiResource
 /// Egg Groups are categories which determine which Pokémon are able
 /// to interbreed. Pokémon may belong to either one or two Egg Groups.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EggGroup : NamedApiResource
 {
     /// <summary>
@@ -202,6 +209,7 @@ public record EggGroup : NamedApiResource
 /// breeding Pokémon but can also result in visual differences or
 /// even different evolutionary lines
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Gender : NamedApiResource
 {
     /// <summary>
@@ -234,6 +242,7 @@ public record Gender : NamedApiResource
 /// <summary>
 /// A rate of chance of a Pokémon being a specific gender
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonSpeciesGender
 {
     /// <summary>
@@ -252,6 +261,7 @@ public record PokemonSpeciesGender
 /// <summary>
 /// Growth rates are the speed with which Pokémon gain levels through experience.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record GrowthRate : NamedApiResource
 {
     /// <summary>
@@ -293,6 +303,7 @@ public record GrowthRate : NamedApiResource
 /// <summary>
 /// Information of a level and how much experience is needed to get to it
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record GrowthRateExperienceLevel
 {
     /// <summary>
@@ -309,6 +320,7 @@ public record GrowthRateExperienceLevel
 /// <summary>
 /// Natures influence how a Pokémon's stats grow.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Nature : NamedApiResource
 {
     /// <summary>
@@ -370,6 +382,7 @@ public record Nature : NamedApiResource
 /// <summary>
 /// The change information for a nature
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record NatureStatChange
 {
     /// <summary>
@@ -388,6 +401,7 @@ public record NatureStatChange
 /// <summary>
 /// Move information for a battle style
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveBattleStylePreference
 {
     /// <summary>
@@ -414,6 +428,7 @@ public record MoveBattleStylePreference
 /// in Pokéathlons. In Pokéathlons, competitions happen on different
 /// courses; one for each of the different Pokéathlon stats.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokeathlonStat : NamedApiResource
 {
     /// <summary>
@@ -444,6 +459,7 @@ public record PokeathlonStat : NamedApiResource
 /// <summary>
 /// The natures and how they are changed with the referenced Pokéathlon stat
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record NaturePokeathlonStatAffectSets
 {
     /// <summary>
@@ -460,6 +476,7 @@ public record NaturePokeathlonStatAffectSets
 /// <summary>
 /// The change information for a Pokéathlon stat
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record NaturePokeathlonStatAffect
 {
     /// <summary>
@@ -481,6 +498,7 @@ public record NaturePokeathlonStatAffect
 /// makes it differ from other Pokémon of the same species, such as base stats,
 /// available abilities and typings.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Pokemon : NamedApiResource
 {
     /// <summary>
@@ -588,6 +606,7 @@ public record Pokemon : NamedApiResource
 /// <summary>
 /// A Pokémon ability
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonAbility
 {
     /// <summary>
@@ -610,6 +629,7 @@ public record PokemonAbility
 /// <summary>
 /// A Pokémon type
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonType
 {
     /// <summary>
@@ -626,6 +646,7 @@ public record PokemonType
 /// <summary>
 /// Class for storing a Pokemon's type data in a previous generation.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonPastTypes : PastGenerationData<List<PokemonType>>
 {
     /// <summary>
@@ -641,6 +662,7 @@ public record PokemonPastTypes : PastGenerationData<List<PokemonType>>
 /// <summary>
 /// A Pokémon held item
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonHeldItem
 {
     /// <summary>
@@ -658,6 +680,7 @@ public record PokemonHeldItem
 /// <summary>
 /// A Pokémon held item and version information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonHeldItemVersion
 {
     /// <summary>
@@ -674,6 +697,7 @@ public record PokemonHeldItemVersion
 /// <summary>
 /// A reference to a move and the version information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonMove
 {
     /// <summary>
@@ -691,6 +715,7 @@ public record PokemonMove
 /// <summary>
 /// The moves a Pokémon learns in which versions
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonMoveVersion
 {
     /// <summary>
@@ -715,6 +740,7 @@ public record PokemonMoveVersion
 /// <summary>
 /// A Pokémon stat
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonStat
 {
     /// <summary>
@@ -737,6 +763,7 @@ public record PokemonStat
 /// <summary>
 /// Pokémon sprite information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonSprites
 {
     /// <summary>
@@ -1776,6 +1803,7 @@ public record PokemonSprites
 /// <summary>
 /// A list of possible encounter locations for a Pokémon with the version information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record LocationAreaEncounter
 {
     /// <summary>
@@ -1798,6 +1826,7 @@ public record LocationAreaEncounter
 /// body. No orange category exists; Pokémon that are primarily orange are
 /// listed as red or brown.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonColor : NamedApiResource
 {
     /// <summary>
@@ -1830,6 +1859,7 @@ public record PokemonColor : NamedApiResource
 /// within a Pokémon species, which do differ in more than just visuals,
 /// the 'Pokémon' entity is used to represent such a variety.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonForm : NamedApiResource
 {
     /// <summary>
@@ -1914,6 +1944,7 @@ public record PokemonForm : NamedApiResource
 /// <summary>
 /// Pokémon sprite information with relation to a form
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonFormSprites
 {
     /// <summary>
@@ -1945,6 +1976,7 @@ public record PokemonFormSprites
 /// Habitats are generally different terrain Pokémon can be found in but
 /// can also be areas designated for rare or legendary Pokémon.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonHabitat : NamedApiResource
 {
     /// <summary>
@@ -1974,6 +2006,7 @@ public record PokemonHabitat : NamedApiResource
 /// <summary>
 /// Shapes used for sorting Pokémon in a Pokédex.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonShape : NamedApiResource
 {
     /// <summary>
@@ -2010,6 +2043,7 @@ public record PokemonShape : NamedApiResource
 /// <summary>
 /// The "scientific" name for an API resource and the language information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record AwesomeNames
 {
     /// <summary>
@@ -2032,6 +2066,7 @@ public record AwesomeNames
 /// can be found in three different varieties, Wormadam-Trash,
 /// Wormadam-Sandy and Wormadam-Plant.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonSpecies : NamedApiResource
 {
     /// <summary>
@@ -2202,6 +2237,7 @@ public record PokemonSpecies : NamedApiResource
 /// <summary>
 /// The flavor text for a Pokémon species
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonSpeciesFlavorTexts
 {
     /// <summary>
@@ -2224,6 +2260,7 @@ public record PokemonSpeciesFlavorTexts
 /// <summary>
 /// The genus information for a Pokémon and the associated language
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Genuses
 {
     /// <summary>
@@ -2240,6 +2277,7 @@ public record Genuses
 /// <summary>
 /// The Pokémon Pokédex entry information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonSpeciesDexEntry
 {
     /// <summary>
@@ -2257,6 +2295,7 @@ public record PokemonSpeciesDexEntry
 /// <summary>
 /// Information for a PalPark area
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PalParkEncounterArea
 {
     /// <summary>
@@ -2281,6 +2320,7 @@ public record PalParkEncounterArea
 /// <summary>
 /// A variety of a Pokémon species
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonSpeciesVariety
 {
     /// <summary>
@@ -2300,6 +2340,7 @@ public record PokemonSpeciesVariety
 /// for each stat which grows as they gain levels and can be altered
 /// momentarily by effects in battles.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Stat : NamedApiResource
 {
     /// <summary>
@@ -2359,6 +2400,7 @@ public record Stat : NamedApiResource
 /// <summary>
 /// A list of moves and how they change statuses
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveStatAffectSets
 {
     /// <summary>
@@ -2375,6 +2417,7 @@ public record MoveStatAffectSets
 /// <summary>
 /// A reference to a move and the change to a status
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveStatAffect
 {
     /// <summary>
@@ -2391,6 +2434,7 @@ public record MoveStatAffect
 /// <summary>
 /// A reference to a nature and the change to a status
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record NatureStatAffectSets
 {
     /// <summary>
@@ -2410,6 +2454,7 @@ public record NatureStatAffectSets
 /// which types of Pokémon it is not very effective against, and which types
 /// of Pokémon it is completely ineffective against.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Type : NamedApiResource
 {
     /// <summary>
@@ -2466,6 +2511,7 @@ public record Type : NamedApiResource
 /// <summary>
 /// A Pokémon type information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record TypePokemon
 {
     /// <summary>
@@ -2482,6 +2528,7 @@ public record TypePokemon
 /// <summary>
 /// The information for how a type interacts with other types
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record TypeRelations
 {
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -10,6 +11,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// have various uses, including healing, powering up, helping
 /// catch Pokémon, or to access a new area.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Item : NamedApiResource
 {
     /// <summary>
@@ -100,6 +102,7 @@ public record Item : NamedApiResource
 /// <summary>
 /// The default description of this item.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemSprites
 {
     /// <summary>
@@ -111,6 +114,7 @@ public record ItemSprites
 /// <summary>
 /// Information for which Pokémon holds an item
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemHolderPokemon
 {
     /// <summary>
@@ -129,6 +133,7 @@ public record ItemHolderPokemon
 /// <summary>
 /// Information for which Pokémon hold an item
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemHolderPokemonVersionDetail
 {
     /// <summary>
@@ -146,6 +151,7 @@ public record ItemHolderPokemonVersionDetail
 /// Item attributes define particular aspects of items,
 /// e.g. "usable in battle" or "consumable".
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemAttribute : NamedApiResource
 {
     /// <summary>
@@ -179,6 +185,7 @@ public record ItemAttribute : NamedApiResource
 /// <summary>
 /// Item categories determine where items will be placed in the players bag.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemCategory : NamedApiResource
 {
     /// <summary>
@@ -212,6 +219,7 @@ public record ItemCategory : NamedApiResource
 /// <summary>
 /// The various effects of the move "Fling" when used with different items.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemFlingEffect : NamedApiResource
 {
     /// <summary>
@@ -241,6 +249,7 @@ public record ItemFlingEffect : NamedApiResource
 /// <summary>
 /// Pockets within the players bag used for storing items by category.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ItemPocket : NamedApiResource
 {
     /// <summary>

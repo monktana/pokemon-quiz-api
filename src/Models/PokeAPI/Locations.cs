@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -8,6 +9,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Locations that can be visited within the games. Locations make
 /// up sizable portions of regions, like cities or routes.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Location : NamedApiResource
 {
     /// <summary>
@@ -48,6 +50,7 @@ public record Location : NamedApiResource
 /// Location areas are sections of areas, such as floors in a building
 /// or cave. Each area has its own set of possible Pokémon encounters.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record LocationArea : NamedApiResource
 {
     /// <summary>
@@ -97,6 +100,7 @@ public record LocationArea : NamedApiResource
 /// <summary>
 /// A mapping between an encounter method and the version that applies
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EncounterMethodRate
 {
     /// <summary>
@@ -115,6 +119,7 @@ public record EncounterMethodRate
 /// <summary>
 /// The details for an encounter with the version
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EncounterVersionDetails
 {
     /// <summary>
@@ -132,6 +137,7 @@ public record EncounterVersionDetails
 /// <summary>
 /// A Pokémon encounter and the version that encounter can happen
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonEncounter
 {
     /// <summary>
@@ -151,6 +157,7 @@ public record PokemonEncounter
 /// Areas used for grouping Pokémon encounters in Pal Park. They're like
 /// habitats that are specific to Pal Park.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PalParkArea : NamedApiResource
 {
     /// <summary>
@@ -181,6 +188,7 @@ public record PalParkArea : NamedApiResource
 /// <summary>
 /// Information for an encounter in PalPark
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PalParkEncounterSpecies
 {
     /// <summary>
@@ -207,6 +215,7 @@ public record PalParkEncounterSpecies
 /// the main difference between regions is the species of Pokémon
 /// that can be encountered within them.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Region : NamedApiResource
 {
     /// <summary>

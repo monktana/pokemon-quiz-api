@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -10,6 +11,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// for each as well as Pokémon they can evolve into up through the
 /// hierarchy.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EvolutionChain : ApiResource
 {
     /// <summary>
@@ -39,6 +41,7 @@ public record EvolutionChain : ApiResource
 /// <summary>
 /// The linking information between a Pokémon and it's evolution(s)
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ChainLink
 {
     /// <summary>
@@ -70,6 +73,7 @@ public record ChainLink
 /// <summary>
 /// The details for an evolution
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EvolutionDetail
 {
     /// <summary>
@@ -200,6 +204,7 @@ public record EvolutionDetail
 /// Evolution triggers are the events and conditions that
 /// cause a Pokémon to evolve.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EvolutionTrigger : NamedApiResource
 {
     /// <summary>

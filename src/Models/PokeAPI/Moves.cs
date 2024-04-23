@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -10,6 +11,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Hidden Machine) can be used outside of battle as well, usually
 /// for the purpose of removing obstacles or exploring new areas.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Move : NamedApiResource
 {
     /// <summary>
@@ -155,6 +157,7 @@ public record Move : NamedApiResource
 /// <summary>
 /// A set of moves that are combos
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ContestComboSets
 {
     /// <summary>
@@ -173,6 +176,7 @@ public record ContestComboSets
 /// <summary>
 /// A detailed list of combos
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ContestComboDetail
 {
     /// <summary>
@@ -191,6 +195,7 @@ public record ContestComboDetail
 /// <summary>
 /// The flavor text for a move
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveFlavorText
 {
     /// <summary>
@@ -215,6 +220,7 @@ public record MoveFlavorText
 /// <summary>
 /// The additional data for a move
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveMetaData
 {
     /// <summary>
@@ -297,6 +303,7 @@ public record MoveMetaData
 /// <summary>
 /// The status and the change for a move
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveStatChange
 {
     /// <summary>
@@ -313,6 +320,7 @@ public record MoveStatChange
 /// <summary>
 /// Move status values
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PastMoveStatValues
 {
     /// <summary>
@@ -360,6 +368,7 @@ public record PastMoveStatValues
 /// <summary>
 /// Move Ailments are status conditions caused by moves used during battle.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveAilment : NamedApiResource
 {
     /// <summary>
@@ -388,6 +397,7 @@ public record MoveAilment : NamedApiResource
 /// <summary>
 /// Styles of moves when used in the Battle Palace.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveBattleStyle : NamedApiResource
 {
     /// <summary>
@@ -411,6 +421,7 @@ public record MoveBattleStyle : NamedApiResource
 /// <summary>
 /// Very general categories that loosely group move effects.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveCategory : NamedApiResource
 {
     /// <summary>
@@ -439,6 +450,7 @@ public record MoveCategory : NamedApiResource
 /// <summary>
 /// Damage classes moves can have, e.g. physical, special, or non-damaging.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveDamageClass : NamedApiResource
 {
     /// <summary>
@@ -472,6 +484,7 @@ public record MoveDamageClass : NamedApiResource
 /// <summary>
 /// Methods by which Pokémon can learn moves.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveLearnMethod : NamedApiResource
 {
     /// <summary>
@@ -507,6 +520,7 @@ public record MoveLearnMethod : NamedApiResource
 /// Targets moves can be directed at during battle. Targets can be Pokémon,
 /// environments or even other moves.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record MoveTarget : NamedApiResource
 {
     /// <summary>

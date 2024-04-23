@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -10,6 +11,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// set of Pokémon, Moves, Abilities and Types that did not exist in
 /// the previous generation are released.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Generation : NamedApiResource
 {
     /// <summary>
@@ -71,6 +73,7 @@ public record Generation : NamedApiResource
 /// Pokémon in a given region with the exception of the national dex
 /// and some smaller dexes related to portions of a region.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Pokedex : NamedApiResource
 {
     /// <summary>
@@ -122,6 +125,7 @@ public record Pokedex : NamedApiResource
 /// <summary>
 /// The entry information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record PokemonEntry
 {
     /// <summary>
@@ -140,6 +144,7 @@ public record PokemonEntry
 /// <summary>
 /// Versions of the games, e.g., Red, Blue or Yellow.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record Version : NamedApiResource
 {
     /// <summary>
@@ -169,6 +174,7 @@ public record Version : NamedApiResource
 /// <summary>
 /// Version groups categorize highly similar versions of the games.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record VersionGroup : NamedApiResource
 {
     /// <summary>

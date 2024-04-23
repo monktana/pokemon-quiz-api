@@ -1,10 +1,13 @@
-﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+﻿using System.Diagnostics.CodeAnalysis;
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 namespace PokeQuiz.Models.PokeApi;
 
 /// <summary>
 /// Methods by which the player might can encounter Pokémon
 /// in the wild, e.g., walking in tall grass.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EncounterMethod : NamedApiResource
 {
     /// <summary>
@@ -35,6 +38,7 @@ public record EncounterMethod : NamedApiResource
 /// Conditions which affect what pokemon might appear in the
 /// wild, e.g., day or night.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EncounterCondition : NamedApiResource
 {
     /// <summary>
@@ -65,6 +69,7 @@ public record EncounterCondition : NamedApiResource
 /// Encounter condition values are the various states that an encounter
 /// condition can have, i.e., time of day can be either day or night.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record EncounterConditionValue : NamedApiResource
 {
     /// <summary>

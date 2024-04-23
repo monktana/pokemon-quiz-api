@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -7,6 +8,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// <summary>
 /// The base class for all resource lists
 /// </summary>
+[ExcludeFromCodeCoverage]
 public abstract class ResourceList<T> where T : ResourceBase
 {
     /// <summary>
@@ -32,6 +34,7 @@ public abstract class ResourceList<T> where T : ResourceBase
 /// The paging object for un-named resources
 /// </summary>
 /// <typeparam name="T">The type of the paged resource</typeparam>
+[ExcludeFromCodeCoverage]
 public class ApiResourceList<T> : ResourceList<T> where T : ApiResource
 {
     /// <summary>
@@ -45,6 +48,7 @@ public class ApiResourceList<T> : ResourceList<T> where T : ApiResource
 /// The paging object for named resources
 /// </summary>
 /// <typeparam name="T">The type of the paged resource</typeparam>
+[ExcludeFromCodeCoverage]
 public class NamedApiResourceList<T> : ResourceList<T> where T : NamedApiResource
 {
     /// <summary>

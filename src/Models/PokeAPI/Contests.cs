@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -8,6 +9,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Contest types are categories judges used to weigh
 /// a Pokémon's condition in Pokémon contests.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ContestType : NamedApiResource
 {
     /// <summary>
@@ -39,6 +41,7 @@ public record ContestType : NamedApiResource
 /// <summary>
 /// The name of the context
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ContestName
 {
     /// <summary>
@@ -61,6 +64,7 @@ public record ContestName
 /// Contest effects refer to the effects of moves
 /// when used in contests.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record ContestEffect : ApiResource
 {
     /// <summary>
@@ -101,6 +105,7 @@ public record ContestEffect : ApiResource
 /// Super contest effects refer to the effects of moves
 /// when used in super contests.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public record SuperContestEffect : ApiResource
 {
     /// <summary>
