@@ -1,6 +1,6 @@
-using PokeQuiz.Models.PokeQuiz;
 using PokeQuiz.Services;
 using RichardSzalay.MockHttp;
+using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
 
 namespace PokeQuiz.UnitTests.Services;
 
@@ -37,7 +37,19 @@ public class PokeQuizServiceTests
     {
         var pokemon = await _pokeQuizService.GetPokemon(1);
 
-        Assert.IsType<Pokemon>(pokemon);
+        Assert.IsType<PokeQuizModels.Pokemon>(pokemon);
+        Assert.Equal(1, pokemon.Id);
+        Assert.Equal("bulbasaur", pokemon.Name);
+    }
+
+    [Fact]
+    public async Task PokeQuizService_GetsASpeciesById()
+    {
+        var species = await _pokeQuizService.GetSpecies(1);
+
+        Assert.IsType<PokeQuizModels.PokemonSpecies>(species);
+        Assert.Equal(1, species.Id);
+        Assert.Equal("bulbasaur", species.Name);
     }
 
     [Fact]
@@ -45,7 +57,9 @@ public class PokeQuizServiceTests
     {
         var move = await _pokeQuizService.GetMove(1);
 
-        Assert.IsType<Move>(move);
+        Assert.IsType<PokeQuizModels.Move>(move);
+        Assert.Equal(1, move.Id);
+        Assert.Equal("pound", move.Name);
     }
 
     [Fact]
@@ -53,7 +67,9 @@ public class PokeQuizServiceTests
     {
         var type = await _pokeQuizService.GetType(1);
 
-        Assert.IsType<PokeQuiz.Models.PokeQuiz.Type>(type);
+        Assert.IsType<PokeQuizModels.Type>(type);
+        Assert.Equal(1, type.Id);
+        Assert.Equal("normal", type.Name);
     }
 
     [Fact]
@@ -61,18 +77,18 @@ public class PokeQuizServiceTests
     {
         var matchup = await _pokeQuizService.GetMatchup();
 
-        Assert.IsType<Matchup>(matchup);
+        Assert.IsType<PokeQuizModels.Matchup>(matchup);
 
         Assert.NotNull(matchup.Attacker);
-        Assert.IsType<Pokemon>(matchup.Attacker);
+        Assert.IsType<PokeQuizModels.Pokemon>(matchup.Attacker);
 
         Assert.NotNull(matchup.Defender);
-        Assert.IsType<Pokemon>(matchup.Defender);
+        Assert.IsType<PokeQuizModels.Pokemon>(matchup.Defender);
 
         Assert.NotNull(matchup.Move);
-        Assert.IsType<Move>(matchup.Move);
+        Assert.IsType<PokeQuizModels.Move>(matchup.Move);
         Assert.True(matchup.Move.Power > 0);
 
-        Assert.Equal(TypeEffectiveness.Effective, matchup.Effectiveness);
+        Assert.Equal(PokeQuizModels.TypeEffectiveness.Effective, matchup.Effectiveness);
     }
 }
