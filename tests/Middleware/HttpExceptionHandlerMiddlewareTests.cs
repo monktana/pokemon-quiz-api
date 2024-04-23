@@ -64,6 +64,11 @@ public class NullPokeQuizService(HttpClient httpClient) : IPokeQuizService
         throw new NotImplementedException();
     }
 
+    public Task<PokemonSpecies> GetSpecies(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<Type> GetType(string name)
     {
         throw new NotImplementedException();

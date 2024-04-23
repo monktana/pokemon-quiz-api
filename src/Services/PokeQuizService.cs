@@ -94,6 +94,16 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     }
 
     /// <summary>
+    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by id.
+    /// </summary>
+    /// <param name="id">The id of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
+    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
+    public async Task<PokeQuizModels.PokemonSpecies> GetSpecies(int id)
+    {
+        return await GetSpecies(id.ToString());
+    }
+
+    /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Type"/> by name
     /// </summary>
     /// <param name="name">The name of the <see cref="Models.PokeQuiz.Type"/></param>
@@ -144,16 +154,6 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     public async Task<PokeQuizModels.Move> GetMove(int id)
     {
         return await GetMove(id.ToString());
-    }
-
-    /// <summary>
-    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by id.
-    /// </summary>
-    /// <param name="id">The id of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
-    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
-    private async Task<PokeQuizModels.PokemonSpecies> GetSpecies(int id)
-    {
-        return await GetSpecies(id.ToString());
     }
 
     /// <summary>

@@ -32,6 +32,13 @@ public interface IPokeQuizService
     Task<PokeQuizModels.PokemonSpecies> GetSpecies(string name);
 
     /// <summary>
+    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by id.
+    /// </summary>
+    /// <param name="id">The id of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
+    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
+    Task<PokeQuizModels.PokemonSpecies> GetSpecies(int id);
+
+    /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Type"/> by name
     /// </summary>
     /// <param name="name">The name of the <see cref="Models.PokeQuiz.Type"/></param>
