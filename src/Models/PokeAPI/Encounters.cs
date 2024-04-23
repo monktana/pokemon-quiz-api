@@ -5,7 +5,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Methods by which the player might can encounter Pokémon
 /// in the wild, e.g., walking in tall grass.
 /// </summary>
-public class EncounterMethod : NamedApiResource
+public record EncounterMethod : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -35,7 +35,7 @@ public class EncounterMethod : NamedApiResource
 /// Conditions which affect what pokemon might appear in the
 /// wild, e.g., day or night.
 /// </summary>
-public class EncounterCondition : NamedApiResource
+public record EncounterCondition : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -65,7 +65,7 @@ public class EncounterCondition : NamedApiResource
 /// Encounter condition values are the various states that an encounter
 /// condition can have, i.e., time of day can be either day or night.
 /// </summary>
-public class EncounterConditionValue : NamedApiResource
+public record EncounterConditionValue : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.

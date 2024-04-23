@@ -10,7 +10,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// for each as well as Pokémon they can evolve into up through the
 /// hierarchy.
 /// </summary>
-public class EvolutionChain : ApiResource
+public record EvolutionChain : ApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -39,7 +39,7 @@ public class EvolutionChain : ApiResource
 /// <summary>
 /// The linking information between a Pokémon and it's evolution(s)
 /// </summary>
-public class ChainLink
+public record ChainLink
 {
     /// <summary>
     /// Whether or not this link is for a baby Pokémon. This would
@@ -70,7 +70,7 @@ public class ChainLink
 /// <summary>
 /// The details for an evolution
 /// </summary>
-public class EvolutionDetail
+public record EvolutionDetail
 {
     /// <summary>
     /// The item required to cause evolution this into Pokémon species.
@@ -200,7 +200,7 @@ public class EvolutionDetail
 /// Evolution triggers are the events and conditions that
 /// cause a Pokémon to evolve.
 /// </summary>
-public class EvolutionTrigger : NamedApiResource
+public record EvolutionTrigger : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.

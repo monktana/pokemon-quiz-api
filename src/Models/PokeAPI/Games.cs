@@ -10,7 +10,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// set of Pokémon, Moves, Abilities and Types that did not exist in
 /// the previous generation are released.
 /// </summary>
-public class Generation : NamedApiResource
+public record Generation : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -71,7 +71,7 @@ public class Generation : NamedApiResource
 /// Pokémon in a given region with the exception of the national dex
 /// and some smaller dexes related to portions of a region.
 /// </summary>
-public class Pokedex : NamedApiResource
+public record Pokedex : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -122,7 +122,7 @@ public class Pokedex : NamedApiResource
 /// <summary>
 /// The entry information
 /// </summary>
-public class PokemonEntry
+public record PokemonEntry
 {
     /// <summary>
     /// The index of this Pokémon species entry within the Pokédex.
@@ -140,7 +140,7 @@ public class PokemonEntry
 /// <summary>
 /// Versions of the games, e.g., Red, Blue or Yellow.
 /// </summary>
-public class Version : NamedApiResource
+public record Version : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -169,7 +169,7 @@ public class Version : NamedApiResource
 /// <summary>
 /// Version groups categorize highly similar versions of the games.
 /// </summary>
-public class VersionGroup : NamedApiResource
+public record VersionGroup : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.

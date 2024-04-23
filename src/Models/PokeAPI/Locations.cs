@@ -8,7 +8,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Locations that can be visited within the games. Locations make
 /// up sizable portions of regions, like cities or routes.
 /// </summary>
-public class Location : NamedApiResource
+public record Location : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -48,7 +48,7 @@ public class Location : NamedApiResource
 /// Location areas are sections of areas, such as floors in a building
 /// or cave. Each area has its own set of possible Pokémon encounters.
 /// </summary>
-public class LocationArea : NamedApiResource
+public record LocationArea : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -97,7 +97,7 @@ public class LocationArea : NamedApiResource
 /// <summary>
 /// A mapping between an encounter method and the version that applies
 /// </summary>
-public class EncounterMethodRate
+public record EncounterMethodRate
 {
     /// <summary>
     /// The method in which Pokémon may be encountered in an area.
@@ -115,7 +115,7 @@ public class EncounterMethodRate
 /// <summary>
 /// The details for an encounter with the version
 /// </summary>
-public class EncounterVersionDetails
+public record EncounterVersionDetails
 {
     /// <summary>
     /// The chance of an encounter to occur.
@@ -132,7 +132,7 @@ public class EncounterVersionDetails
 /// <summary>
 /// A Pokémon encounter and the version that encounter can happen
 /// </summary>
-public class PokemonEncounter
+public record PokemonEncounter
 {
     /// <summary>
     /// The Pokémon being encountered.
@@ -151,7 +151,7 @@ public class PokemonEncounter
 /// Areas used for grouping Pokémon encounters in Pal Park. They're like
 /// habitats that are specific to Pal Park.
 /// </summary>
-public class PalParkArea : NamedApiResource
+public record PalParkArea : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -181,7 +181,7 @@ public class PalParkArea : NamedApiResource
 /// <summary>
 /// Information for an encounter in PalPark
 /// </summary>
-public class PalParkEncounterSpecies
+public record PalParkEncounterSpecies
 {
     /// <summary>
     /// The base score given to the player when this Pokémon is caught
@@ -207,7 +207,7 @@ public class PalParkEncounterSpecies
 /// the main difference between regions is the species of Pokémon
 /// that can be encountered within them.
 /// </summary>
-public class Region : NamedApiResource
+public record Region : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.

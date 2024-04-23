@@ -10,7 +10,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Hidden Machine) can be used outside of battle as well, usually
 /// for the purpose of removing obstacles or exploring new areas.
 /// </summary>
-public class Move : NamedApiResource
+public record Move : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -155,7 +155,7 @@ public class Move : NamedApiResource
 /// <summary>
 /// A set of moves that are combos
 /// </summary>
-public class ContestComboSets
+public record ContestComboSets
 {
     /// <summary>
     /// A detail of moves this move can be used before or after,
@@ -173,7 +173,7 @@ public class ContestComboSets
 /// <summary>
 /// A detailed list of combos
 /// </summary>
-public class ContestComboDetail
+public record ContestComboDetail
 {
     /// <summary>
     /// A list of moves to use before this move.
@@ -191,7 +191,7 @@ public class ContestComboDetail
 /// <summary>
 /// The flavor text for a move
 /// </summary>
-public class MoveFlavorText
+public record MoveFlavorText
 {
     /// <summary>
     /// The localized flavor text for an api resource in a
@@ -215,7 +215,7 @@ public class MoveFlavorText
 /// <summary>
 /// The additional data for a move
 /// </summary>
-public class MoveMetaData
+public record MoveMetaData
 {
     /// <summary>
     /// The status ailment this move inflicts on its target.
@@ -297,7 +297,7 @@ public class MoveMetaData
 /// <summary>
 /// The status and the change for a move
 /// </summary>
-public class MoveStatChange
+public record MoveStatChange
 {
     /// <summary>
     /// The amount of change
@@ -313,7 +313,7 @@ public class MoveStatChange
 /// <summary>
 /// Move status values
 /// </summary>
-public class PastMoveStatValues
+public record PastMoveStatValues
 {
     /// <summary>
     /// The percent value of how likely this move is to be successful.
@@ -360,7 +360,7 @@ public class PastMoveStatValues
 /// <summary>
 /// Move Ailments are status conditions caused by moves used during battle.
 /// </summary>
-public class MoveAilment : NamedApiResource
+public record MoveAilment : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -388,7 +388,7 @@ public class MoveAilment : NamedApiResource
 /// <summary>
 /// Styles of moves when used in the Battle Palace.
 /// </summary>
-public class MoveBattleStyle : NamedApiResource
+public record MoveBattleStyle : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -411,7 +411,7 @@ public class MoveBattleStyle : NamedApiResource
 /// <summary>
 /// Very general categories that loosely group move effects.
 /// </summary>
-public class MoveCategory : NamedApiResource
+public record MoveCategory : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -439,7 +439,7 @@ public class MoveCategory : NamedApiResource
 /// <summary>
 /// Damage classes moves can have, e.g. physical, special, or non-damaging.
 /// </summary>
-public class MoveDamageClass : NamedApiResource
+public record MoveDamageClass : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -472,7 +472,7 @@ public class MoveDamageClass : NamedApiResource
 /// <summary>
 /// Methods by which Pokémon can learn moves.
 /// </summary>
-public class MoveLearnMethod : NamedApiResource
+public record MoveLearnMethod : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -507,7 +507,7 @@ public class MoveLearnMethod : NamedApiResource
 /// Targets moves can be directed at during battle. Targets can be Pokémon,
 /// environments or even other moves.
 /// </summary>
-public class MoveTarget : NamedApiResource
+public record MoveTarget : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.

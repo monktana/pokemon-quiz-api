@@ -7,7 +7,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// The base class for classes that have an API endpoint. These
 /// classes can also be cached with their id value.
 /// </summary>
-public abstract class ResourceBase
+public abstract record ResourceBase
 {
     /// <summary>
     /// The identifier for this resource
@@ -28,7 +28,7 @@ public abstract class ResourceBase
 /// <summary>
 /// The base class for API resources that have a name property
 /// </summary>
-public abstract class NamedApiResource : ResourceBase
+public abstract record NamedApiResource : ResourceBase
 {
     /// <summary>
     /// The name of this resource
@@ -39,6 +39,6 @@ public abstract class NamedApiResource : ResourceBase
 /// <summary>
 /// The base class for API resources that don't have a name property
 /// </summary>
-public abstract class ApiResource : ResourceBase
+public abstract record ApiResource : ResourceBase
 {
 }

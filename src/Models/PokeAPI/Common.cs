@@ -7,7 +7,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// <summary>
 /// Languages for translations of API resource information.
 /// </summary>
-public class Language : NamedApiResource
+public record Language : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -53,14 +53,14 @@ public class Language : NamedApiResource
 /// A reference to an API object that does not have a `Name` property
 /// </summary>
 /// <typeparam name="T">The type of resource</typeparam>
-public class ApiResource<T> : UrlNavigation<T> where T : ResourceBase
+public record ApiResource<T> : UrlNavigation<T> where T : ResourceBase
 {
 }
 
 /// <summary>
 /// The description for an API resource
 /// </summary>
-public class Descriptions
+public record Descriptions
 {
     /// <summary>
     /// The localized description for an API resource in a
@@ -77,7 +77,7 @@ public class Descriptions
 /// <summary>
 /// The effect of an API resource
 /// </summary>
-public class Effects
+public record Effects
 {
     /// <summary>
     /// The localized effect text for an API resource in a
@@ -94,7 +94,7 @@ public class Effects
 /// <summary>
 /// Encounter information for a Pokémon
 /// </summary>
-public class Encounter
+public record Encounter
 {
     /// <summary>
     /// The lowest level the Pokémon could be encountered at.
@@ -129,7 +129,7 @@ public class Encounter
 /// <summary>
 /// A flavor text entry for an API resource
 /// </summary>
-public class FlavorTexts
+public record FlavorTexts
 {
     /// <summary>
     /// The localized flavor text for an API resource in a specific language.
@@ -146,7 +146,7 @@ public class FlavorTexts
 /// <summary>
 /// The index information for a generation game
 /// </summary>
-public class GenerationGameIndex
+public record GenerationGameIndex
 {
     /// <summary>
     /// The internal id of an API resource within game data.
@@ -163,7 +163,7 @@ public class GenerationGameIndex
 /// <summary>
 /// The version detail information for a machine
 /// </summary>
-public class MachineVersionDetail
+public record MachineVersionDetail
 {
     /// <summary>
     /// The machine that teaches a move from an item.
@@ -180,7 +180,7 @@ public class MachineVersionDetail
 /// <summary>
 /// A name with language information
 /// </summary>
-public class Names
+public record Names
 {
     /// <summary>
     /// The localized name for an API resource in a specific language.
@@ -197,7 +197,7 @@ public class Names
 /// A reference to an API resource that has a `Name` property
 /// </summary>
 /// <typeparam name="T">The type of reference</typeparam>
-public class NamedApiResource<T> : UrlNavigation<T> where T : ResourceBase
+public record NamedApiResource<T> : UrlNavigation<T> where T : ResourceBase
 {
     /// <summary>
     /// The name of the referenced resource.
@@ -209,7 +209,7 @@ public class NamedApiResource<T> : UrlNavigation<T> where T : ResourceBase
 /// Class representing data from a previous generation.
 /// </summary>
 /// <typeparam name="TData">The type of the data.</typeparam>
-public class PastGenerationData<TData>
+public record PastGenerationData<TData>
 {
     /// <summary>
     /// The final generation in which the Pokemon had the given data.
@@ -225,7 +225,7 @@ public class PastGenerationData<TData>
 /// <summary>
 /// The long text for effect text entries
 /// </summary>
-public class VerboseEffect
+public record VerboseEffect
 {
     /// <summary>
     /// The localized effect text for an API resource in a
@@ -248,7 +248,7 @@ public class VerboseEffect
 /// <summary>
 /// The detailed information for version encounter entries
 /// </summary>
-public class VersionEncounterDetail
+public record VersionEncounterDetail
 {
     /// <summary>
     /// The game version this encounter happens in.
@@ -271,7 +271,7 @@ public class VersionEncounterDetail
 /// <summary>
 /// The index information for games
 /// </summary>
-public class VersionGameIndex
+public record VersionGameIndex
 {
     /// <summary>
     /// The internal id of an API resource within game data.
@@ -288,7 +288,7 @@ public class VersionGameIndex
 /// <summary>
 /// The version group flavor text information
 /// </summary>
-public class VersionGroupFlavorText
+public record VersionGroupFlavorText
 {
     /// <summary>
     /// The localized name for an API resource in a specific language.

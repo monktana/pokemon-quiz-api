@@ -8,7 +8,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Berries are small fruits that can provide HP and status condition restoration,
 /// stat enhancement, and even damage negation when eaten by Pokémon.
 /// </summary>
-public class Berry : NamedApiResource
+public record Berry : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -93,7 +93,7 @@ public class Berry : NamedApiResource
 /// <summary>
 /// The potency and flavor that a berry can have
 /// </summary>
-public class BerryFlavorMap
+public record BerryFlavorMap
 {
     /// <summary>
     /// How powerful the referenced flavor is for this
@@ -110,7 +110,7 @@ public class BerryFlavorMap
 /// <summary>
 /// Berries can be soft or hard.
 /// </summary>
-public class BerryFirmness : NamedApiResource
+public record BerryFirmness : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -140,7 +140,7 @@ public class BerryFirmness : NamedApiResource
 /// Flavors determine whether a Pokémon will benefit or suffer from eating
 /// a berry based on their nature.
 /// </summary>
-public class BerryFlavor : NamedApiResource
+public record BerryFlavor : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -175,7 +175,7 @@ public class BerryFlavor : NamedApiResource
 /// <summary>
 /// The potency and flavor that a berry can have
 /// </summary>
-public class FlavorBerryMap
+public record FlavorBerryMap
 {
     /// <summary>
     /// How powerful this referenced flavor is for this

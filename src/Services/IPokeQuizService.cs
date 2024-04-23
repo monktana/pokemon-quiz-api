@@ -1,61 +1,61 @@
-using PokeQuiz.Models.PokeQuiz;
+using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
 
 namespace PokeQuiz.Services;
 
 public interface IPokeQuizService
 {
     /// <summary>
-    /// Constructs a <see cref="Matchup"/>.
+    /// Constructs a <see cref="PokeQuizModels.Matchup"/>.
     /// </summary>
-    /// <returns>The matchup containing two <see cref="Pokemon"/> and a <see cref="Move"/></returns>
-    Task<Models.PokeQuiz.Matchup> GetMatchup();
+    /// <returns>The matchup containing two <see cref="PokeQuizModels.Pokemon"/> and a <see cref="PokeQuizModels.Move"/></returns>
+    Task<PokeQuizModels.Matchup> GetMatchup();
 
     /// <summary>
-    /// Get a <see cref="Pokemon"/> by name.
+    /// Get a <see cref="PokeQuizModels.Pokemon"/> by name.
     /// </summary>
-    /// <param name="name">The name of the <see cref="Pokemon"/></param>
-    /// <returns>The object representing <see cref="Pokemon"/></returns>
-    Task<Models.PokeQuiz.Pokemon> GetPokemon(string name);
+    /// <param name="name">The name of the <see cref="PokeQuizModels.Pokemon"/></param>
+    /// <returns>The object representing <see cref="PokeQuizModels.Pokemon"/></returns>
+    Task<PokeQuizModels.Pokemon> GetPokemon(string name);
 
     /// <summary>
-    /// Get a <see cref="Pokemon"/> by id.
+    /// Get a <see cref="PokeQuizModels.Pokemon"/> by id.
     /// </summary>
-    /// <param name="id">The id of the <see cref="Pokemon"/></param>
-    /// <returns>The object representing <see cref="Pokemon"/></returns>
-    Task<Models.PokeQuiz.Pokemon> GetPokemon(int id);
+    /// <param name="id">The id of the <see cref="PokeQuizModels.Pokemon"/></param>
+    /// <returns>The object representing <see cref="PokeQuizModels.Pokemon"/></returns>
+    Task<PokeQuizModels.Pokemon> GetPokemon(int id);
 
     /// <summary>
-    /// Get a <see cref="PokemonSpecies"/> by name.
+    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by name.
     /// </summary>
-    /// <param name="name">The name of the <see cref="PokemonSpecies"/></param>
-    /// <returns>The object representing the <see cref="PokemonSpecies"/></returns>
-    Task<Models.PokeQuiz.PokemonSpecies> GetSpecies(string name);
+    /// <param name="name">The name of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
+    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
+    Task<PokeQuizModels.PokemonSpecies> GetSpecies(string name);
 
     /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Type"/> by name
     /// </summary>
     /// <param name="name">The name of the <see cref="Models.PokeQuiz.Type"/></param>
     /// <returns>The object representing the <see cref="Models.PokeQuiz.Type"/></returns>
-    Task<Models.PokeQuiz.Type> GetType(string name);
+    Task<PokeQuizModels.Type> GetType(string name);
 
     /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Type"/> by id
     /// </summary>
     /// <param name="id">The id of the <see cref="Models.PokeQuiz.Type"/></param>
     /// <returns>The object representing the <see cref="Models.PokeQuiz.Type"/></returns>
-    Task<Models.PokeQuiz.Type> GetType(int id);
+    Task<PokeQuizModels.Type> GetType(int id);
 
     /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Move"/> by name
     /// </summary>
     /// <param name="name">The name of the <see cref="Models.PokeQuiz.Move"/></param>
     /// <returns>The object representing the <see cref="Models.PokeQuiz.Move"/></returns>
-    Task<Models.PokeQuiz.Move> GetMove(string name);
+    Task<PokeQuizModels.Move> GetMove(string name);
 
     /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Move"/> by id
     /// </summary>
     /// <param name="id">The id of the <see cref="Models.PokeQuiz.Move"/></param>
     /// <returns>The object representing the <see cref="Models.PokeQuiz.Move"/></returns>
-    Task<Models.PokeQuiz.Move> GetMove(int id);
+    Task<PokeQuizModels.Move> GetMove(int id);
 }

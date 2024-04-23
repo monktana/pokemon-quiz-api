@@ -196,7 +196,7 @@ public class PokeApiClient : IDisposable
             await _client.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
 
         response.EnsureSuccessStatusCode();
-        return DeserializeContent<T>(await response.Content.ReadAsStringAsync());
+        return DeserializeContent<T>(await response.Content.ReadAsStringAsync(cancellationToken));
     }
 
     /// <summary>

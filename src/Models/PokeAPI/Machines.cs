@@ -10,7 +10,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// not certain that one specific TM or HM corresponds to a
 /// single Machine.
 /// </summary>
-public class Machine : ApiResource
+public record Machine : ApiResource
 {
     /// <summary>
     /// The identifier for this resource.

@@ -1,7 +1,6 @@
 using PokeQuiz.Middleware;
-using PokeQuiz.Models.PokeQuiz;
 using PokeQuiz.Services;
-using Type = PokeQuiz.Models.PokeQuiz.Type;
+using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -41,35 +40,35 @@ app.MapGet("/pokemon/{id}", async (string id, IPokeQuizService service) => await
     .WithOpenApi()
     .Produces(404)
     .Produces(500)
-    .Produces<Pokemon>();
+    .Produces<PokeQuizModels.Pokemon>();
 
 app.MapGet("/species/{id}", async (string id, IPokeQuizService service) => await service.GetSpecies(id))
     .WithName("GetSpecies")
     .WithOpenApi()
     .Produces(404)
     .Produces(500)
-    .Produces<PokemonSpecies>();
+    .Produces<PokeQuizModels.PokemonSpecies>();
 
 app.MapGet("/type/{id}", async (string id, IPokeQuizService service) => await service.GetType(id))
     .WithName("GetType")
     .WithOpenApi()
     .Produces(404)
     .Produces(500)
-    .Produces<Type>();
+    .Produces<PokeQuizModels.Type>();
 
 app.MapGet("/move/{id}", async (string id, IPokeQuizService service) => await service.GetMove(id))
     .WithName("GetMove")
     .WithOpenApi()
     .Produces(404)
     .Produces(500)
-    .Produces<Move>();
+    .Produces<PokeQuizModels.Move>();
 
 app.MapGet("/matchup", async (IPokeQuizService service) => await service.GetMatchup())
     .WithName("GetMatchup")
     .WithOpenApi()
     .Produces(404)
     .Produces(500)
-    .Produces<Matchup>();
+    .Produces<PokeQuizModels.Matchup>();
 
 app.Run();
 

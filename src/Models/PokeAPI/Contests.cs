@@ -8,7 +8,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// Contest types are categories judges used to weigh
 /// a Pokémon's condition in Pokémon contests.
 /// </summary>
-public class ContestType : NamedApiResource
+public record ContestType : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -39,7 +39,7 @@ public class ContestType : NamedApiResource
 /// <summary>
 /// The name of the context
 /// </summary>
-public class ContestName
+public record ContestName
 {
     /// <summary>
     /// The name for this contest.
@@ -61,7 +61,7 @@ public class ContestName
 /// Contest effects refer to the effects of moves
 /// when used in contests.
 /// </summary>
-public class ContestEffect : ApiResource
+public record ContestEffect : ApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -101,7 +101,7 @@ public class ContestEffect : ApiResource
 /// Super contest effects refer to the effects of moves
 /// when used in super contests.
 /// </summary>
-public class SuperContestEffect : ApiResource
+public record SuperContestEffect : ApiResource
 {
     /// <summary>
     /// The identifier for this resource.

@@ -10,7 +10,7 @@ namespace PokeQuiz.Models.PokeApi;
 /// have various uses, including healing, powering up, helping
 /// catch Pokémon, or to access a new area.
 /// </summary>
-public class Item : NamedApiResource
+public record Item : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -100,7 +100,7 @@ public class Item : NamedApiResource
 /// <summary>
 /// The default description of this item.
 /// </summary>
-public class ItemSprites
+public record ItemSprites
 {
     /// <summary>
     /// The default description of this item.
@@ -111,7 +111,7 @@ public class ItemSprites
 /// <summary>
 /// Information for which Pokémon holds an item
 /// </summary>
-public class ItemHolderPokemon
+public record ItemHolderPokemon
 {
     /// <summary>
     /// The Pokémon that holds this item.
@@ -129,7 +129,7 @@ public class ItemHolderPokemon
 /// <summary>
 /// Information for which Pokémon hold an item
 /// </summary>
-public class ItemHolderPokemonVersionDetail
+public record ItemHolderPokemonVersionDetail
 {
     /// <summary>
     /// How often this Pokémon holds this item in this version.
@@ -146,7 +146,7 @@ public class ItemHolderPokemonVersionDetail
 /// Item attributes define particular aspects of items,
 /// e.g. "usable in battle" or "consumable".
 /// </summary>
-public class ItemAttribute : NamedApiResource
+public record ItemAttribute : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -179,7 +179,7 @@ public class ItemAttribute : NamedApiResource
 /// <summary>
 /// Item categories determine where items will be placed in the players bag.
 /// </summary>
-public class ItemCategory : NamedApiResource
+public record ItemCategory : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -212,7 +212,7 @@ public class ItemCategory : NamedApiResource
 /// <summary>
 /// The various effects of the move "Fling" when used with different items.
 /// </summary>
-public class ItemFlingEffect : NamedApiResource
+public record ItemFlingEffect : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
@@ -241,7 +241,7 @@ public class ItemFlingEffect : NamedApiResource
 /// <summary>
 /// Pockets within the players bag used for storing items by category.
 /// </summary>
-public class ItemPocket : NamedApiResource
+public record ItemPocket : NamedApiResource
 {
     /// <summary>
     /// The identifier for this resource.
