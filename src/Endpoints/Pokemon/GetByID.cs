@@ -1,0 +1,17 @@
+using PokeQuiz.Services;
+using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
+
+namespace PokeQuiz.Endpoints.Pokemon;
+
+public class GetById : IEndpoint
+{
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/pokemon/{id}", async (string id, IPokeQuizService service) => await service.GetPokemon(id))
+            .WithName("GetPokemon")
+            .WithOpenApi()
+            .Produces(404)
+            .Produces(500)
+            .Produces<PokeQuizModels.Pokemon>();
+    }
+}
