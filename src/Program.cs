@@ -1,20 +1,27 @@
 using System.Reflection;
 using PokeQuiz.Endpoints;
 using PokeQuiz.Middleware;
+using PokeQuiz.Models;
 using PokeQuiz.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var corsOptions = new CorsOptions();
+builder.Configuration.GetSection(PokeQuiz.Models.CorsOptions.Position).Bind(corsOptions);
+builder.Services.Configure<PokeQuiz.Models.CorsOptions>(builder.Configuration.GetSection(PokeQuiz.Models.CorsOptions.Position));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecific",
         policy =>
         {
-            policy.WithOrigins(builder.Configuration.GetValue<string>("AllowedOrigins"))
-                .AllowAnyHeader().AllowAnyMethod();
+            policy.WithOrigins(corsOptions.AllowedOrigins)
+                .AllowAnyHeader()
+                .WithMethods(corsOptions.AllowedMethods);
         });
 });
+
 builder.Services.AddProblemDetails();
 
 builder.Services.AddSingleton<TypeEffectivenessService>(_ => new TypeEffectivenessService(Path.Join(Directory.GetCurrentDirectory(), "Data", "PokemonTypeMatrix.json")));
