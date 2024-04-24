@@ -1,26 +1,26 @@
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PokeQuiz.Middleware;
 
-public class HttpExceptionHandlerMiddleware(RequestDelegate next)
+public class HttpExceptionHandlerMiddleware : IMiddleware
 {
-    public async Task Invoke(HttpContext httpContext)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
         {
-            await next(httpContext);
+            await next(context);
         }
         catch (Exception exception)
         {
             if (exception is not HttpRequestException httpRequestException) throw;
-            if (httpRequestException.StatusCode == HttpStatusCode.NotFound)
+
+            context.Response.StatusCode = (int)httpRequestException.StatusCode!;
+
+            var problemDetails = new ProblemDetails
             {
-                await Results.NotFound().ExecuteAsync(httpContext);
-            }
-            else
-            {
-                await Results.Problem(statusCode: (int?)httpRequestException.StatusCode).ExecuteAsync(httpContext);
-            }
+                Status = (int)httpRequestException.StatusCode!
+            };
+            await Results.Problem(problemDetails).ExecuteAsync(context);
         }
     }
 }
