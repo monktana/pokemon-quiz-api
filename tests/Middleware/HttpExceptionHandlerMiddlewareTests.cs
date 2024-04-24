@@ -54,17 +54,7 @@ public class NullPokeQuizService(HttpClient httpClient) : IPokeQuizService
         throw new HttpRequestException("Not Found", null, HttpStatusCode.NotFound);
     }
 
-    public Task<Pokemon> GetPokemon(int id)
-    {
-        return GetPokemon(id.ToString());
-    }
-
     public Task<PokemonSpecies> GetSpecies(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PokemonSpecies> GetSpecies(int id)
     {
         throw new NotImplementedException();
     }
@@ -74,18 +64,8 @@ public class NullPokeQuizService(HttpClient httpClient) : IPokeQuizService
         throw new NotImplementedException();
     }
 
-    public Task<Type> GetType(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<Move> GetMove(string name)
     {
         throw new HttpRequestException("Bad Request", null, HttpStatusCode.BadRequest);
-    }
-
-    public Task<Move> GetMove(int id)
-    {
-        return GetMove(id.ToString());
     }
 }
