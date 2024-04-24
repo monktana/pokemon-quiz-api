@@ -8,9 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var corsOptions = new CorsOptions();
-builder.Configuration.GetSection(PokeQuiz.Models.CorsOptions.Position).Bind(corsOptions);
-builder.Services.Configure<PokeQuiz.Models.CorsOptions>(builder.Configuration.GetSection(PokeQuiz.Models.CorsOptions.Position));
+builder.Services.AddOptions<CorsSettings>()
+    .BindConfiguration(CorsSettings.Position)
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+var corsOptions = builder.Configuration.GetSection(CorsSettings.Position).Get<CorsSettings>();
+builder.Services.Configure<CorsSettings>(builder.Configuration.GetSection(CorsSettings.Position));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecific",
@@ -22,6 +26,7 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddTransient<HttpExceptionHandlerMiddleware>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddSingleton<TypeEffectivenessService>(_ => new TypeEffectivenessService(Path.Join(Directory.GetCurrentDirectory(), "Data", "PokemonTypeMatrix.json")));
@@ -30,13 +35,13 @@ builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
-app.UseMiddleware<HttpExceptionHandlerMiddleware>();
 app.UseStatusCodePages(async statusCodeContext
     => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode)
         .ExecuteAsync(statusCodeContext.HttpContext));
 
 app.UseCors("AllowSpecific");
 
+app.UseMiddleware<HttpExceptionHandlerMiddleware>();
 app.MapEndpoints();
 
 if (app.Environment.IsDevelopment())

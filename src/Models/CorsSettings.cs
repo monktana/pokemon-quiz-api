@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PokeQuiz.Models;
 
-public record CorsOptions
+public record CorsSettings
 {
     public const string Position = "Cors";
-    public string AllowedHosts { get; init; } = string.Empty;
-    public string AllowedOrigins { get; init; } = string.Empty;
-    public string[] AllowedMethods { get; init; } = [];
+
+    [Required] public string[] AllowedOrigins { get; init; }
+
+    [Required] public string[] AllowedMethods { get; init; }
 }
