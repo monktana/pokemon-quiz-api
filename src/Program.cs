@@ -3,6 +3,7 @@ using PokeQuiz.Endpoints;
 using PokeQuiz.Middleware;
 using PokeQuiz.Models;
 using PokeQuiz.Services;
+using PokeQuiz.Services.MessageHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -29,15 +30,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<HttpExceptionHandlerMiddleware>();
 builder.Services.AddProblemDetails();
 
+builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = builder.Configuration.GetConnectionString("Redis"); });
 builder.Services.AddSingleton<TypeEffectivenessService>(_ => new TypeEffectivenessService(Path.Join(Directory.GetCurrentDirectory(), "Data", "PokemonTypeMatrix.json")));
-builder.Services.AddHttpClient<IPokeQuizService, PokeQuizService>().AddHttpMessageHandler(_ => new FileCache());
+builder.Services.AddSingleton<RedisCache>();
+builder.Services.AddHttpClient<IPokeQuizService, PokeQuizService>().AddHttpMessageHandler<RedisCache>();
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
-
-app.UseStatusCodePages(async statusCodeContext
-    => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode)
-        .ExecuteAsync(statusCodeContext.HttpContext));
 
 app.UseCors("AllowSpecific");
 

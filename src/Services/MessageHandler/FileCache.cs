@@ -1,6 +1,8 @@
 using System.Net;
 using System.Text;
 
+namespace PokeQuiz.Services.MessageHandler;
+
 /// <summary>
 /// Handles caching <see cref="HttpResponseMessage"/> as (JSON) files
 /// </summary>
@@ -25,7 +27,6 @@ internal class FileCache : DelegatingHandler
     {
         var cachePath = Path.Join(Directory.GetCurrentDirectory(), "Cache", request.RequestUri!.PathAndQuery)
             .TrimEnd('/') + ".json";
-        SemaphoreSlim fileLock = _semaphoreSlim;
 
         if (File.Exists(cachePath))
         {
@@ -33,14 +34,14 @@ internal class FileCache : DelegatingHandler
 
             // used to prevent reading a file that's not (completely) written.
             // can happen during parallel requests to the same resource, e.g. requesting the same (uncached) move twice.
-            await fileLock.WaitAsync(cancellationToken);
+            await _semaphoreSlim.WaitAsync(cancellationToken);
             try
             {
                 content = await File.ReadAllTextAsync(cachePath, cancellationToken);
             }
             finally
             {
-                fileLock.Release();
+                _semaphoreSlim.Release();
             }
 
             if (!string.IsNullOrWhiteSpace(content))
@@ -58,7 +59,7 @@ internal class FileCache : DelegatingHandler
             return response;
         }
 
-        await fileLock.WaitAsync(cancellationToken);
+        await _semaphoreSlim.WaitAsync(cancellationToken);
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(cachePath)!);
@@ -67,7 +68,7 @@ internal class FileCache : DelegatingHandler
         }
         finally
         {
-            fileLock.Release();
+            _semaphoreSlim.Release();
         }
 
         return response;
