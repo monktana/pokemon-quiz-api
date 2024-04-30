@@ -9,6 +9,7 @@ public class GetMatchup : IEndpoint
     {
         app.MapGet("/matchup", async (IPokeQuizService service) => await service.GetMatchup())
             .WithName("GetMatchup")
+            .WithTags("Matchup")
             .WithOpenApi()
             .Produces(404)
             .Produces(500)

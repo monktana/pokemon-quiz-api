@@ -9,6 +9,7 @@ public class GetById : IEndpoint
     {
         app.MapGet("/move/{id}", async (string id, IPokeQuizService service) => await service.GetMove(id))
             .WithName("GetMove")
+            .WithTags("Move")
             .WithOpenApi()
             .Produces(404)
             .Produces(500)

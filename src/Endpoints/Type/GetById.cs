@@ -9,6 +9,7 @@ public class GetById : IEndpoint
     {
         app.MapGet("/type/{id}", async (string id, IPokeQuizService service) => await service.GetType(id))
             .WithName("GetType")
+            .WithTags("PokemonType")
             .WithOpenApi()
             .Produces(404)
             .Produces(500)
