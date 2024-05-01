@@ -14,6 +14,8 @@ builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options => { op
 builder.Services.AddSwaggerGen(config => { config.SwaggerDoc("v1", new OpenApiInfo { Title = "PokeQuiz API", Version = "v1" }); });
 
 builder.Configuration.AddEnvironmentVariables();
+builder.Configuration.AddUserSecrets<Program>();
+
 builder.Services.AddOptions<CorsSettings>()
     .BindConfiguration(CorsSettings.Position)
     .ValidateDataAnnotations()

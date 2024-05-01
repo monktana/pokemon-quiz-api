@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>pokemon_quiz_api</RootNamespace>
     <PreserveCompilationContext>true</PreserveCompilationContext>
+    <UserSecretsId>3e024db1-b8df-4794-85f5-1d8b60103b21</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
