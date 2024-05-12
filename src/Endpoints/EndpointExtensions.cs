@@ -1,6 +1,8 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+// ReSharper disable UnusedMethodReturnValue.Global
+
 namespace PokeQuiz.Endpoints;
 
 public static class EndpointExtensions
