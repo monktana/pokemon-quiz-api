@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
 using PokeQuiz.Endpoints;
-using PokeQuiz.Middleware;
+using PokeQuiz.ExceptionHandler;
 using PokeQuiz.Models;
 using PokeQuiz.OpenApi;
 using PokeQuiz.Services;
@@ -46,9 +46,7 @@ builder.Services.AddApiVersioning(options =>
 });
 builder.Services.ConfigureOptions<ConfigureSwaggerGenOptions>();
 
-builder.Services.AddTransient<HttpExceptionHandlerMiddleware>();
-builder.Services.AddProblemDetails();
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddSingleton<TypeEffectivenessService>(_ => new TypeEffectivenessService(Path.Join(Directory.GetCurrentDirectory(), "Data", "PokemonTypeMatrix.json")));
 builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = builder.Configuration.GetConnectionString("Redis"); });
 builder.Services.AddScoped<RedisCache>();
@@ -57,9 +55,13 @@ builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
-app.UseCors("AllowSpecific");
+// https://github.com/dotnet/aspnetcore/issues/51888
+app.UseExceptionHandler(o => { });
 
-app.UseMiddleware<HttpExceptionHandlerMiddleware>();
+app.UseStatusCodePages(async statusCodeContext
+    => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode)
+        .ExecuteAsync(statusCodeContext.HttpContext));
+app.UseCors("AllowSpecific");
 
 var apiVersion = app.NewApiVersionSet().HasApiVersion(new ApiVersion(1)).ReportApiVersions().Build();
 var apiVersionGroup = app.MapGroup("api/v{apiVersion:apiVersion}").WithApiVersionSet(apiVersion);
@@ -81,6 +83,6 @@ if (app.Environment.IsDevelopment())
 
 app.Run();
 
-public partial class Program
+public abstract partial class Program
 {
 }
