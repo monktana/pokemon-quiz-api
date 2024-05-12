@@ -15,7 +15,7 @@ public static class ModelExtensions
     }
 }
 
-public interface IDeserializable<TPokeApi>
+public interface IDeserializable<in TPokeApi>
 {
     public void FromPokeApiResource(TPokeApi pokeApiType);
 }
