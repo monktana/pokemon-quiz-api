@@ -97,6 +97,28 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     }
 
     /// <summary>
+    /// Get an overview of all <see cref="Models.PokeQuiz.Type"/>
+    /// </summary>
+    /// <returns>An overview of all available <see cref="Models.PokeQuiz.Type"/></returns>
+    public Task<List<PokeAPIModels.NamedApiResource<PokeAPIModels.Type>>> GetTypes()
+    {
+        var response = new List<PokeAPIModels.NamedApiResource<PokeAPIModels.Type>>();
+        var types = typeof(PokeQuizModels.Types);
+
+        foreach (var property in types.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public))
+        {
+            var value = property.GetValue(null);
+            response.Add(new PokeAPIModels.NamedApiResource<PokeAPIModels.Type>
+            {
+                Name = value.ToString(),
+                Url = $"{Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}/api/v1/type/{value}"
+            });
+        }
+
+        return Task.FromResult(response);
+    }
+
+    /// <summary>
     /// Get a <see cref="Models.PokeQuiz.Move"/> by name
     /// </summary>
     /// <param name="name">The name of the <see cref="Models.PokeQuiz.Move"/></param>

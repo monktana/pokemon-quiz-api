@@ -45,6 +45,31 @@ public class Type : IDeserializable<PokeApi.Type>
 }
 
 /// <summary>
+/// Representation of all available types
+/// </summary>
+public static class Types
+{
+    public static string Bug = "bug";
+    public static string Dark = "dark";
+    public static string Dragon = "dragon";
+    public static string Electric = "electric";
+    public static string Fairy = "fairy";
+    public static string Fighting = "fighting";
+    public static string Fire = "fire";
+    public static string Flying = "flying";
+    public static string Ghost = "ghost";
+    public static string Grass = "grass";
+    public static string Ground = "ground";
+    public static string Ice = "ice";
+    public static string Normal = "normal";
+    public static string Poison = "poison";
+    public static string Psychic = "psychic";
+    public static string Rock = "rock";
+    public static string Steel = "steel";
+    public static string Water = "water";
+}
+
+/// <summary>
 /// Representation of the different type match ups.
 /// </summary>
 public enum TypeEffectiveness
