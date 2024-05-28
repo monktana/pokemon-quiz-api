@@ -16,9 +16,6 @@
       "applicationUrl": "http://localhost:5174",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "Cors__AllowedHosts": "",
-        "Cors__AllowedOrigins__0": "http://localhost:5173",
-        "Cors__AllowedMethods__0": "GET",
         "ConnectionStrings__Redis": "localhost:6379",
         "Logging__LogLevel__Default": "Information",
         "Logging__LogLevel__Microsoft.AspNetCore": "Warning"
@@ -31,9 +28,6 @@
       "applicationUrl": "https://localhost:7281;http://localhost:5190",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "Cors__AllowedHosts": "",
-        "Cors__AllowedOrigins__0": "http://localhost:5173",
-        "Cors__AllowedMethods__0": "GET",
         "ConnectionStrings__Redis": "localhost:6379",
         "Logging__LogLevel__Default": "Information",
         "Logging__LogLevel__Microsoft.AspNetCore": "Warning"
