@@ -7,7 +7,7 @@ public class GlobalExceptionHandler : IExceptionHandler
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var problemDetails = ProblemDetailsFactory.FromException(exception);
-        await Results.Problem(problemDetails: problemDetails).ExecuteAsync(httpContext);
+        await Results.Problem(problemDetails).ExecuteAsync(httpContext);
 
         return true;
     }
