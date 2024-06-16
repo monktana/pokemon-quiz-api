@@ -16,7 +16,7 @@ public class GlobalExceptionHandlerTests(WebApplicationFactory<Program> factory)
     private readonly Mock<IPokeQuizService> _mockPokeQuizService = new();
 
     [Fact]
-    public async void TryHandleAsync_HandlesHttpRequestException()
+    public async Task TryHandleAsync_HandlesHttpRequestException()
     {
         _mockPokeQuizService.Setup(service => service.GetPokemon("snasen")).Throws(NotFoundException);
 
@@ -38,7 +38,7 @@ public class GlobalExceptionHandlerTests(WebApplicationFactory<Program> factory)
     }
 
     [Fact]
-    public async void TryHandleAsync_HandlesNonHttpRequestException()
+    public async Task TryHandleAsync_HandlesNonHttpRequestException()
     {
         _mockPokeQuizService.Setup(service => service.GetMatchup()).Throws(ArgumentException);
 

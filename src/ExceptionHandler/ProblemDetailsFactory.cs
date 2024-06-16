@@ -18,7 +18,7 @@ public static class ProblemDetailsFactory
     private static int GetStatusCode(Exception exception) =>
         exception switch
         {
-            HttpRequestException requestException => (int)requestException.StatusCode,
+            HttpRequestException requestException => (int)requestException.StatusCode!,
             _ => StatusCodes.Status500InternalServerError
         };
 

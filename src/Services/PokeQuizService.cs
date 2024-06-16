@@ -110,7 +110,7 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
             var value = property.GetValue(null);
             response.Add(new PokeAPIModels.NamedApiResource<PokeAPIModels.Type>
             {
-                Name = value.ToString(),
+                Name = value?.ToString() ?? string.Empty,
                 Url = $"{Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}/api/v1/type/{value}"
             });
         }

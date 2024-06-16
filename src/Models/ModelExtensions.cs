@@ -9,7 +9,7 @@ public static class ModelExtensions
         var typeFileContent = File.ReadAllText(absoluteFilePath);
         var typeJson = JsonSerializer.Deserialize<TPokeApi>(typeFileContent, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower });
         var tPokeQuiz = new TPokeQuiz();
-        tPokeQuiz.FromPokeApiResource(typeJson);
+        if (typeJson != null) tPokeQuiz.FromPokeApiResource(typeJson);
 
         return tPokeQuiz;
     }
