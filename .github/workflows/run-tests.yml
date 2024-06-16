@@ -10,15 +10,10 @@ jobs:
 
   build:
 
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         configuration: [Debug, Release]
-
-    runs-on: windows-latest
-
-    env:
-      Solution_Name: pokemon-quiz-api.sln
-      Test_Project_Path: tests\pokemon-quiz-api-tests.csproj
 
     steps:
     - name: Checkout
