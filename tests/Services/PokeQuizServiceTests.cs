@@ -55,7 +55,7 @@ public class PokeQuizServiceTests
     [Fact]
     public async Task PokeQuizService_GetsAMoveById()
     {
-        var move = await _pokeQuizService.GetMove("bulbasaur");
+        var move = await _pokeQuizService.GetMove("pound");
 
         Assert.IsType<PokeQuizModels.Move>(move);
         Assert.Equal(1, move.Id);
@@ -65,11 +65,25 @@ public class PokeQuizServiceTests
     [Fact]
     public async Task PokeQuizService_GetsATypeById()
     {
-        var type = await _pokeQuizService.GetType("bulbasaur");
+        var type = await _pokeQuizService.GetType("normal");
 
         Assert.IsType<PokeQuizModels.Type>(type);
         Assert.Equal(1, type.Id);
         Assert.Equal("normal", type.Name);
+    }
+
+    [Fact]
+    public async Task PokeQuizService_GetsAnOverviewOfAllTypes()
+    {
+        var typesResponse = await _pokeQuizService.GetTypes();
+        var pokemonTypes = typeof(PokeQuizModels.Types).GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+
+        Assert.Equal(pokemonTypes.Length, typesResponse.Count);
+
+        foreach (var pokemonType in pokemonTypes)
+        {
+            Assert.True(typesResponse.Exists(type => type.Name == pokemonType.Name.ToLower()));
+        }
     }
 
     [Fact]
