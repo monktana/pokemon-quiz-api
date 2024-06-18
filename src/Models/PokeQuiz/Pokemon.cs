@@ -5,6 +5,7 @@
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using PokeQuiz.Extensions;
 
@@ -13,6 +14,7 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// <summary>
 /// Pokémon sprite information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class PokemonSprites : IDeserializable<PokeApi.PokemonSprites>
 {
     /// <summary>
@@ -88,6 +90,7 @@ public class PokemonSprites : IDeserializable<PokeApi.PokemonSprites>
 /// can be found in three different varieties, Wormadam-Trash,
 /// Wormadam-Sandy and Wormadam-Plant.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class PokemonSpecies : IDeserializable<PokeApi.PokemonSpecies>
 {
     /// <summary>
@@ -130,6 +133,7 @@ public class PokemonSpecies : IDeserializable<PokeApi.PokemonSpecies>
 /// makes it differ from other Pokémon of the same species, such as base stats,
 /// available abilities and typings.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class Pokemon
 {
     /// <summary>

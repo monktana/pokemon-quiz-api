@@ -1,5 +1,6 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using System.Diagnostics.CodeAnalysis;
 using PokeQuiz.Extensions;
 using PokeQuiz.Models.PokeApi;
 
@@ -9,6 +10,7 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// <summary>
 /// A name with language information
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class InternationalName : IDeserializable<Names>
 {
     /// <summary>

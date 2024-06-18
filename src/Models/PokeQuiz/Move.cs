@@ -1,10 +1,12 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using System.Diagnostics.CodeAnalysis;
 using PokeQuiz.Extensions;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 namespace PokeQuiz.Models.PokeQuiz;
 
+[ExcludeFromCodeCoverage]
 public class Move : IDeserializable<PokeApi.Move>
 {
     /// <summary>

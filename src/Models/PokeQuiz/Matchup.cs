@@ -1,5 +1,7 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using System.Diagnostics.CodeAnalysis;
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 namespace PokeQuiz.Models.PokeQuiz;
 
@@ -7,6 +9,7 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// A match up consisting of two <see cref="Pokemon"/> and a <see cref="Move"/>.
 /// Represents a round in a Pokémon fight.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class Matchup
 {
     /// <summary>

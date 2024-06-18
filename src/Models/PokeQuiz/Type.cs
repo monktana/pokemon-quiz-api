@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using PokeQuiz.Extensions;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -9,6 +10,7 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// another type.
 /// <remarks>The different type effectiveness are represented by <see cref="TypeEffectiveness"/></remarks>
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class Type : IDeserializable<PokeApi.Type>
 {
     /// <summary>
