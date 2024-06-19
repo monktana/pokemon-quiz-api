@@ -4,11 +4,16 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace PokeQuiz.Services.MessageHandler;
 
-internal class RedisCache(IDistributedCache distributedCache) : DelegatingHandler
+public class RedisCache(IDistributedCache distributedCache) : DelegatingHandler
 {
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         return SendAsync(request, cancellationToken).Result;
+    }
+
+    public HttpResponseMessage SendInternal(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        return Send(request, cancellationToken);
     }
 
     /// <summary>
