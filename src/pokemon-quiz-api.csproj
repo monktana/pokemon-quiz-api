@@ -7,6 +7,7 @@
     <RootNamespace>pokemon_quiz_api</RootNamespace>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <UserSecretsId>3e024db1-b8df-4794-85f5-1d8b60103b21</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,5 +16,11 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6"/>
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 </Project>
