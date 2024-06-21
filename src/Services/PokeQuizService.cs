@@ -49,8 +49,8 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
         (Task<PokeQuizModels.PokemonSpecies> species, Task<List<PokeQuizModels.Move>> moves, Task<List<PokeQuizModels.Type>> types) tasks =
         (
             GetSpecies(pokemon.Name),
-            GetMoves(pokemon.Moves.Select(move => move.Move.Name)),
-            GetTypes(pokemon.Types.Select(type => type.Type.Name))
+            GetMoves(pokemon.Moves.Select(move => move.Move)),
+            GetTypes(pokemon.Types.Select(type => type.Type))
         );
 
         await Task.WhenAll(tasks.species, tasks.moves, tasks.types);
@@ -139,6 +139,32 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     }
 
     /// <summary>
+    /// Get a <see cref="PokeQuizModels.PokemonSpecies"/> by url.
+    /// </summary>
+    /// <param name="url">The resource url of the <see cref="PokeQuizModels.PokemonSpecies"/></param>
+    /// <returns>The object representing the <see cref="PokeQuizModels.PokemonSpecies"/></returns>
+    public async Task<PokeQuizModels.PokemonSpecies> GetSpecies(PokeAPIModels.UrlNavigation<PokeAPIModels.PokemonSpecies> url)
+    {
+        var pokeApiSpecies = await _client.GetResourceAsync(url);
+        var species = new PokeQuizModels.PokemonSpecies();
+        species.FromPokeApiResource(pokeApiSpecies);
+        return species;
+    }
+
+    /// <summary>
+    /// Get a <see cref="Models.PokeQuiz.Type"/> by url
+    /// </summary>
+    /// <param name="url">The resource url of the <see cref="Models.PokeQuiz.Type"/></param>
+    /// <returns>The object representing the <see cref="Models.PokeQuiz.Type"/></returns>
+    public async Task<PokeQuizModels.Type> GetType(PokeAPIModels.UrlNavigation<PokeAPIModels.Type> url)
+    {
+        var pokeApiType = await _client.GetResourceAsync(url);
+        var type = new PokeQuizModels.Type();
+        type.FromPokeApiResource(pokeApiType);
+        return type;
+    }
+
+    /// <summary>
     /// Get a list of <see cref="Models.PokeQuiz.Type"/> by name
     /// </summary>
     /// <param name="typeNames">The list of <see cref="Models.PokeQuiz.Type"/> names</param>
@@ -146,6 +172,33 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     private async Task<List<PokeQuizModels.Type>> GetTypes(IEnumerable<string> typeNames)
     {
         return (await Task.WhenAll(typeNames.Select(GetType))).ToList();
+    }
+
+    /// <summary>
+    /// Get a list of <see cref="Models.PokeQuiz.Type"/> by their urls
+    /// </summary>
+    /// <param name="urls">The list of <see cref="Models.PokeQuiz.Type"/> urls</param>
+    /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Type"/>s</returns>
+    private async Task<List<PokeQuizModels.Type>> GetTypes(IEnumerable<PokeAPIModels.UrlNavigation<PokeAPIModels.Type>> urls)
+    {
+        return (await Task.WhenAll(urls.Select(GetType))).ToList();
+    }
+
+    /// <summary>
+    /// Get a <see cref="Models.PokeQuiz.Move"/> by url
+    /// </summary>
+    /// <param name="url">The resource url of the <see cref="Models.PokeQuiz.Move"/></param>
+    /// <returns>The object representing the <see cref="Models.PokeQuiz.Move"/></returns>
+    public async Task<PokeQuizModels.Move> GetMove(PokeAPIModels.UrlNavigation<PokeAPIModels.Move> url)
+    {
+        var pokeApiMove = await _client.GetResourceAsync(url);
+        var move = new PokeQuizModels.Move();
+        move.FromPokeApiResource(pokeApiMove);
+
+        var type = await GetType(pokeApiMove.Type);
+        move.Type = type;
+
+        return move;
     }
 
     /// <summary>
@@ -159,9 +212,38 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
         foreach (var moveName in moveNames)
         {
             var move = _client.GetResourceAsync<PokeAPIModels.Move>(moveName).Result;
-            var pokeApiType = _client.GetResourceAsync(move.Type).Result;
-            var type = new PokeQuizModels.Type();
-            type.FromPokeApiResource(pokeApiType);
+            var type = GetType(move.Type).Result;
+
+            list.Add(Task.FromResult(new PokeQuizModels.Move
+            {
+                Id = move.Id,
+                Name = move.Name,
+                Names = move.Names.Select(name =>
+                {
+                    var internationalName = new PokeQuizModels.InternationalName();
+                    internationalName.FromPokeApiResource(name);
+                    return internationalName;
+                }).ToList(),
+                Power = move.Power,
+                Type = type,
+            }));
+        }
+
+        return (await Task.WhenAll(list)).ToList();
+    }
+
+    /// <summary>
+    /// Get a list of <see cref="Models.PokeQuiz.Move"/> by their urls
+    /// </summary>
+    /// <param name="urls">The list of <see cref="Models.PokeQuiz.Move"/> urls</param>
+    /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Move"/>s</returns>
+    private async Task<List<PokeQuizModels.Move>> GetMoves(IEnumerable<PokeAPIModels.UrlNavigation<PokeAPIModels.Move>> urls)
+    {
+        var list = new List<Task<PokeQuizModels.Move>>();
+        foreach (var url in urls)
+        {
+            var move = _client.GetResourceAsync(url).Result;
+            var type = GetType(move.Type).Result;
 
             list.Add(Task.FromResult(new PokeQuizModels.Move
             {

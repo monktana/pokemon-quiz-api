@@ -49,7 +49,7 @@ public class PokeApiClient : IDisposable
         var sanitizedApiParam = isApiEndpointCaseSensitive ? apiParam : apiParam.ToLowerInvariant();
         var apiEndpoint = GetApiEndpointString<T>();
 
-        return await GetAsync<T>($"{apiEndpoint}/{sanitizedApiParam}/", cancellationToken);
+        return await GetAsync<T>($"{apiEndpoint}/{sanitizedApiParam}", cancellationToken);
     }
 
     /// <summary>
