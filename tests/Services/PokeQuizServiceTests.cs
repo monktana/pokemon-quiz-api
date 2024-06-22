@@ -14,19 +14,19 @@ public class PokeQuizServiceTests
         var mockHttp = new MockHttpMessageHandler();
         {
             var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/bulbasaur.json"));
-            mockHttp.When("https://pokeapi.co/api/v2/pokemon/*/").Respond("application/json", response);
+            mockHttp.When("https://pokeapi.co/api/v2/pokemon/*").Respond("application/json", response);
         }
         {
             var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon-species/bulbasaur.json"));
-            mockHttp.When("https://pokeapi.co/api/v2/pokemon-species/*/").Respond("application/json", response);
+            mockHttp.When("https://pokeapi.co/api/v2/pokemon-species/*").Respond("application/json", response);
         }
         {
             var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/move/pound.json"));
-            mockHttp.When("https://pokeapi.co/api/v2/move/*/").Respond("application/json", response);
+            mockHttp.When("https://pokeapi.co/api/v2/move/*").Respond("application/json", response);
         }
         {
             var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/type/normal.json"));
-            mockHttp.When("https://pokeapi.co/api/v2/type/*/").Respond("application/json", response);
+            mockHttp.When("https://pokeapi.co/api/v2/type/*").Respond("application/json", response);
         }
 
         _pokeQuizService = new PokeQuizService(mockHttp.ToHttpClient(), _typeEffectivenessService);

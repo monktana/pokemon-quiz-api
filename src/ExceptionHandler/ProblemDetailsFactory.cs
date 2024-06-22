@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,7 @@ public static class ProblemDetailsFactory
             _ => GetTitleFromStatusCode(HttpStatusCode.InternalServerError)
         };
 
+    [ExcludeFromCodeCoverage]
     private static string GetTitleFromStatusCode(HttpStatusCode statuscode) =>
         statuscode switch
         {
@@ -58,6 +60,7 @@ public static class ProblemDetailsFactory
             _ => GetTypeFromStatusCode(HttpStatusCode.InternalServerError)
         };
 
+    [ExcludeFromCodeCoverage]
     private static string GetTypeFromStatusCode(HttpStatusCode statuscode) =>
         statuscode switch
         {
