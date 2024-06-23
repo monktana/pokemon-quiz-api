@@ -48,7 +48,7 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
         var pokemon = await _client.GetResourceAsync<PokeAPIModels.Pokemon>(name);
         (Task<PokeQuizModels.PokemonSpecies> species, Task<List<PokeQuizModels.Move>> moves, Task<List<PokeQuizModels.Type>> types) tasks =
         (
-            GetSpecies(pokemon.Name),
+            GetSpecies(pokemon.Species),
             GetMoves(pokemon.Moves.Select(move => move.Move)),
             GetTypes(pokemon.Types.Select(type => type.Type))
         );
@@ -169,7 +169,7 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     /// </summary>
     /// <param name="typeNames">The list of <see cref="Models.PokeQuiz.Type"/> names</param>
     /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Type"/>s</returns>
-    private async Task<List<PokeQuizModels.Type>> GetTypes(IEnumerable<string> typeNames)
+    public async Task<List<PokeQuizModels.Type>> GetTypes(IEnumerable<string> typeNames)
     {
         return (await Task.WhenAll(typeNames.Select(GetType))).ToList();
     }
@@ -206,7 +206,7 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     /// </summary>
     /// <param name="moveNames">The list of <see cref="Models.PokeQuiz.Move"/> names</param>
     /// <returns>A list of objects representing <see cref="Models.PokeQuiz.Move"/>s</returns>
-    private async Task<List<PokeQuizModels.Move>> GetMoves(IEnumerable<string> moveNames)
+    public async Task<List<PokeQuizModels.Move>> GetMoves(IEnumerable<string> moveNames)
     {
         var list = new List<Task<PokeQuizModels.Move>>();
         foreach (var moveName in moveNames)
