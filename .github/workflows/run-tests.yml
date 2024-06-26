@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: github-runner-y69hOM3Mf3eYk
     strategy:
       matrix:
         configuration: [Debug, Release]
