@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: selfhosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         configuration: [Debug, Release]
