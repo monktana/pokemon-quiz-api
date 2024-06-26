@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: github-runner-y69hOM3Mf3eYk
+    runs-on: selfhosted
     strategy:
       matrix:
         configuration: [Debug, Release]
