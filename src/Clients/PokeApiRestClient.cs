@@ -7,7 +7,7 @@ namespace PokeQuiz.Clients;
 /// <summary>
 /// Gets data from the PokeAPI.
 /// </summary>
-public class PokeApiClient : IDisposable
+public class PokeApiRestClient : IDisposable
 {
     private readonly Uri _baseUri = new("https://pokeapi.co/api/v2/");
 
@@ -18,7 +18,7 @@ public class PokeApiClient : IDisposable
     /// See https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
     /// </summary>
     /// <param name="httpClient">HttpClient implementation</param>
-    public PokeApiClient(HttpClient httpClient)
+    public PokeApiRestClient(HttpClient httpClient)
     {
         _client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _client.BaseAddress = _baseUri;
@@ -81,7 +81,7 @@ public class PokeApiClient : IDisposable
     /// Gets a resource by id.
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
-    /// <param name="id">Id of resource</param>
+    /// <param name="id">ID of resource</param>
     /// <returns>The object of the resource</returns>
     public async Task<T> GetResourceAsync<T>(int id) where T : ResourceBase
     {
@@ -92,10 +92,10 @@ public class PokeApiClient : IDisposable
     /// Gets a resource by id
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
-    /// <param name="id">Id of resource</param>
+    /// <param name="id">ID of resource</param>
     /// <param name="cancellationToken">Cancellation token for the request; not utilized if data has been cached</param>
     /// <returns>The object of the resource</returns>
-    public async Task<T> GetResourceAsync<T>(int id, CancellationToken cancellationToken)
+    private async Task<T> GetResourceAsync<T>(int id, CancellationToken cancellationToken)
         where T : ResourceBase
     {
         return await GetResourcesWithParamsAsync<T>(id.ToString(), cancellationToken);
@@ -103,7 +103,7 @@ public class PokeApiClient : IDisposable
 
     /// <summary>
     /// Gets a resource by name. This lookup
-    /// is case insensitive.
+    /// is case-insensitive.
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
     /// <param name="name">Name of resource</param>
@@ -116,13 +116,13 @@ public class PokeApiClient : IDisposable
 
     /// <summary>
     /// Gets a resource by name. This lookup
-    /// is case insensitive.
+    /// is case-insensitive.
     /// </summary>
     /// <typeparam name="T">The type of resource</typeparam>
     /// <param name="name">Name of resource</param>
     /// <param name="cancellationToken">Cancellation token for the request; not utilized if data has been cached</param>
     /// <returns>The object of the resource</returns>
-    public async Task<T> GetResourceAsync<T>(string name, CancellationToken cancellationToken)
+    private async Task<T> GetResourceAsync<T>(string name, CancellationToken cancellationToken)
         where T : NamedApiResource
     {
         var sanitizedName = name
@@ -144,7 +144,7 @@ public class PokeApiClient : IDisposable
     public async Task<List<T>> GetResourceAsync<T>(IEnumerable<UrlNavigation<T>> collection)
         where T : ResourceBase
     {
-        return await GetResourceAsync<T>(collection, CancellationToken.None);
+        return await GetResourceAsync(collection, CancellationToken.None);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class PokeApiClient : IDisposable
     /// <param name="collection">The collection of navigation objects</param>
     /// <param name="cancellationToken">Cancellation token for the request; not utilized if data has been cached</param>
     /// <returns>A list of resolved objects</returns>
-    public async Task<List<T>> GetResourceAsync<T>(IEnumerable<UrlNavigation<T>> collection,
+    private async Task<List<T>> GetResourceAsync<T>(IEnumerable<UrlNavigation<T>> collection,
         CancellationToken cancellationToken)
         where T : ResourceBase
     {
@@ -180,7 +180,7 @@ public class PokeApiClient : IDisposable
     /// <param name="urlResource">The single navigation object to resolve</param>
     /// <param name="cancellationToken">Cancellation token for the request; not utilized if data has been cached</param>
     /// <returns>A resolved object</returns>
-    public async Task<T> GetResourceAsync<T>(UrlNavigation<T> urlResource, CancellationToken cancellationToken)
+    private async Task<T> GetResourceAsync<T>(UrlNavigation<T> urlResource, CancellationToken cancellationToken)
         where T : ResourceBase
     {
         return await GetResourceByUrlAsync<T>(urlResource.Url, cancellationToken);
@@ -210,14 +210,13 @@ public class PokeApiClient : IDisposable
 
     private static string GetApiEndpointString<T>()
     {
-        PropertyInfo propertyInfo = typeof(T).GetProperty("ApiEndpoint", BindingFlags.Static | BindingFlags.NonPublic);
+        var propertyInfo = typeof(T).GetProperty("ApiEndpoint", BindingFlags.Static | BindingFlags.NonPublic);
         return propertyInfo.GetValue(null).ToString();
     }
 
     private static bool IsApiEndpointCaseSensitive<T>()
     {
-        PropertyInfo propertyInfo =
-            typeof(T).GetProperty("IsApiEndpointCaseSensitive", BindingFlags.Static | BindingFlags.NonPublic);
+        var propertyInfo = typeof(T).GetProperty("IsApiEndpointCaseSensitive", BindingFlags.Static | BindingFlags.NonPublic);
         return propertyInfo == null ? false : (bool)propertyInfo.GetValue(null);
     }
 }
