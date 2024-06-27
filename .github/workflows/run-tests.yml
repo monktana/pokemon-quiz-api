@@ -43,7 +43,7 @@ jobs:
       packages: write
       
     env:
-      REGISTRY: registry.heroku.com
+      REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
 
     steps:
@@ -59,9 +59,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.HEROKU_MAIL }}
-          email: ${{ secrets.HEROKU_MAIL }}
-          password: ${{ secrets.HEROKU_TOKEN }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
