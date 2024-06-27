@@ -1,4 +1,4 @@
-name: build, publish and deploy
+name: build, test and publish
 
 on:
   workflow_dispatch:
@@ -9,9 +9,6 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        configuration: [Release]
 
     steps:
     - name: Checkout repository
@@ -78,15 +75,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  deploy:
-    runs-on: self-hosted
-    needs: [publish]
-    if: (github.ref == 'refs/heads/main' && github.event_name == 'push')
-
-    steps:
-      - name: Refresh container
-        run: |
-          echo $PWD
-          ls
-          ./container.sh
