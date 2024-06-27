@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.AddEnvironmentVariables();
 builder.Configuration.AddUserSecrets<Program>();
 
+builder.WebHost.UseSentry();
 builder.Services.AddCors(options => { options.AddPolicy("AllowAll", policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); }); });
 
 builder.Services.AddApiVersioning(options =>

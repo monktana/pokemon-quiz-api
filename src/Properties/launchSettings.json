@@ -17,6 +17,10 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ConnectionStrings__Redis": "localhost:6379",
+        "Sentry__Dsn": "",
+        "Sentry__Debug": "true",
+        "Sentry__TracesSampleRate": "1",
+        "Sentry__ProfilesSampleRate": "1",
         "Logging__LogLevel__Default": "Information",
         "Logging__LogLevel__Microsoft.AspNetCore": "Warning"
       }
@@ -29,6 +33,10 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ConnectionStrings__Redis": "localhost:6379",
+        "Sentry__Dsn": "",
+        "Sentry__Debug": "true",
+        "Sentry__TracesSampleRate": "1",
+        "Sentry__ProfilesSampleRate": "1",
         "Logging__LogLevel__Default": "Information",
         "Logging__LogLevel__Microsoft.AspNetCore": "Warning"
       }
