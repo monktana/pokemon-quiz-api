@@ -1,4 +1,4 @@
-name: run tests
+name: build, publish and deploy
 
 on:
   workflow_dispatch:
@@ -86,4 +86,7 @@ jobs:
 
     steps:
       - name: Refresh container
-        run: /bin/bash /usr/syno/bin/synoschedtask --run id=8
+        run: |
+          echo $PWD
+          ls
+          ./container.sh
