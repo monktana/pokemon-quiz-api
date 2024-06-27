@@ -1,6 +1,6 @@
 ﻿# Use the .NET 8.0 SDK Docker image to build the project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ENV REDIS_CONNECTIONSTRING=""
+ENV ConnectionStrings__Redis=""
 WORKDIR /app
 # Copy everything
 COPY . ./

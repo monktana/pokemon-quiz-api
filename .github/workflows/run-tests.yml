@@ -78,3 +78,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    runs-on: self-hosted
+    needs: [publish]
+    if: (github.ref == 'refs/heads/main' && github.event_name == 'push')
+
+    steps:
+      - name: Refresh container
+        run: /usr/syno/bin/synoschedtask --run id=8
