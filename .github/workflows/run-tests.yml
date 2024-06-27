@@ -60,6 +60,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ secrets.HEROKU_MAIL }}
+          email: ${{ secrets.HEROKU_MAIL }}
           password: ${{ secrets.HEROKU_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
