@@ -1,4 +1,6 @@
-﻿services:
+﻿version: "3.8"
+
+services:
   pokemon-quiz-api:
     build:
       context: .
@@ -9,6 +11,10 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
       - ConnectionStrings__Redis=redis:6379
+      - Sentry__Dsn=""
+      - Sentry__Debug=false
+      - Sentry__TracesSampleRate=1
+      - Sentry__ProfilesSampleRate=1
     depends_on:
       - redis
   redis:
