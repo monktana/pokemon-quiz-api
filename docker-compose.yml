@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: src/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=
-      - ConnectionStrings__Redis=
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ConnectionStrings:Redis=redis:6379
       - Sentry__Dsn=
       - Sentry__Debug=false
       - Sentry__TracesSampleRate=0.5
