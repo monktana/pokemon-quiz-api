@@ -9,6 +9,9 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
+    
+    env:
+      SENTRY__DNS: ${{ env.SENTRY_DNS }}
 
     steps:
     - name: Checkout repository
@@ -75,3 +78,25 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [publish]
+    
+    steps:
+      - name: Deploy to Coolify
+        id: api-request
+        uses: muhfaris/request-action@v1
+        with:
+          url: ${{ secrets.COOLIFY_WEBHOOK }}
+          headers: ${{ secrets.COOLIFY_TOKEN }}
+          method: GET
+
+      - name: Show API Response Status
+        run: |
+          echo "Response Status: ${{ steps.api-request.outputs.response-status }}"
+
+      - name: Show API Response Data
+        run: |
+          echo "Response Data: ${{ steps.api-request.outputs.response-data }}"
+        
