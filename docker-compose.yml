@@ -8,13 +8,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
       - ConnectionStrings__Redis=redis:6379
-      - Sentry__Dsn=""
+      - Sentry__Dsn=
       - Sentry__Debug=false
-      - Sentry__TracesSampleRate=1
+      - Sentry__TracesSampleRate=0.5
       - Sentry__ProfilesSampleRate=1
     depends_on:
       - redis
   redis:
     image: "redis:alpine"
-    ports:
-      - "6379:6379"
