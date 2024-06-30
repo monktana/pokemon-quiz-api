@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      Sentry__Dsn: ""
+      Sentry:Dsn: ""
 
     steps:
     - name: Checkout repository
