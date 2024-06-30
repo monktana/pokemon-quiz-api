@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      Sentry:Dsn: ${{ secrets.SENTRY_DSN }}
+      Sentry:Dsn: ${{ vars.SENTRY_DSN }}
 
     steps:
     - name: Checkout repository
