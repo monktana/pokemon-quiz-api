@@ -17,11 +17,14 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.AddEnvironmentVariables();
 builder.Configuration.AddUserSecrets<Program>();
 
-builder.WebHost.UseSentry();
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+{
+    builder.WebHost.UseSentry();
+}
+
 builder.Services.AddCors(options => { options.AddPolicy("AllowAll", policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); }); });
 
-builder.Services.AddHealthChecks().AddRedis(builder.Configuration.GetConnectionString("Redis") ?? string.Empty)
-    .AddCheck<PokeApiHealthCheck>("PokeApi");
+builder.Services.AddHealthChecks().AddRedis(builder.Configuration.GetConnectionString("Redis") ?? string.Empty).AddCheck<PokeApiHealthCheck>("PokeApi");
 
 builder.Services.AddApiVersioning(options =>
 {
