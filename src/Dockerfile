@@ -20,3 +20,6 @@ EXPOSE 8080
 EXPOSE 8081
 COPY --from=build /app/build .
 ENTRYPOINT ["dotnet", "pokemon-quiz-api.dll"]
+
+HEALTHCHECK --start-period=30s \
+ CMD curl -f https://api.pokequiz.me/api/v1/health || exit 1
