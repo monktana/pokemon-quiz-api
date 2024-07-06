@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Asp.Versioning;
 using PokeQuiz.Endpoints;
 using PokeQuiz.ExceptionHandler;
+using PokeQuiz.HealthChecks;
 using PokeQuiz.OpenApi;
 using PokeQuiz.Services;
 using PokeQuiz.Services.MessageHandler;
@@ -18,6 +19,9 @@ builder.Configuration.AddUserSecrets<Program>();
 
 builder.WebHost.UseSentry();
 builder.Services.AddCors(options => { options.AddPolicy("AllowAll", policy => { policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); }); });
+
+builder.Services.AddHealthChecks().AddRedis(builder.Configuration.GetConnectionString("Redis") ?? string.Empty)
+    .AddCheck<PokeApiHealthCheck>("PokeApi");
 
 builder.Services.AddApiVersioning(options =>
 {

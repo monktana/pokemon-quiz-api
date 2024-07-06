@@ -11,8 +11,6 @@ public class GetMatchup : IEndpoint
             .WithName("GetMatchup")
             .WithTags("Matchup")
             .WithOpenApi()
-            .Produces(404)
-            .Produces(500)
             .Produces<PokeQuizModels.Matchup>();
     }
 }

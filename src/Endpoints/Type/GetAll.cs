@@ -11,8 +11,6 @@ public class GetAll : IEndpoint
             .WithName("GetTypes")
             .WithTags("PokemonType")
             .WithOpenApi()
-            .Produces(404)
-            .Produces(500)
             .Produces<List<PokeQuizModels.Type>>();
     }
 }

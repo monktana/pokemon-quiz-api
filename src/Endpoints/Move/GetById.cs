@@ -11,8 +11,6 @@ public class GetById : IEndpoint
             .WithName("GetMove")
             .WithTags("Move")
             .WithOpenApi()
-            .Produces(404)
-            .Produces(500)
             .Produces<PokeQuizModels.Move>();
     }
 }

@@ -11,8 +11,6 @@ public class GetById : IEndpoint
             .WithName("GetSpecies")
             .WithTags("PokemonSpecies")
             .WithOpenApi()
-            .Produces(404)
-            .Produces(500)
             .Produces<PokeQuizModels.PokemonSpecies>();
     }
 }
