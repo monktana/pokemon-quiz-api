@@ -4,7 +4,7 @@ namespace PokeQuiz.HealthChecks;
 
 public class PokeApiHealthCheck(HttpClient client) : IHealthCheck
 {
-    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new())
     {
         try
         {
