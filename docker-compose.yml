@@ -6,12 +6,14 @@ services:
       context: .
       dockerfile: src/Dockerfile
     environment:
-      - ConnectionStrings:Redis=${REDIS_CONNECTION_STRING}
-      - Sentry:Dsn=${SENTRY_DSN}
       - Sentry:Debug=false
       - Sentry:TracesSampleRate=0.5
       - Sentry:ProfilesSampleRate=1
     depends_on:
       - redis
+    ports:
+      - "8080:8080"
   redis:
     image: "redis:alpine"
+    ports:
+      - "6379:6379"
