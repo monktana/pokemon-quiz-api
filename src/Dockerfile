@@ -22,5 +22,5 @@ EXPOSE 8081
 COPY --from=build /app/build .
 ENTRYPOINT ["dotnet", "pokemon-quiz-api.dll"]
 
-HEALTHCHECK --start-period=30s \
- CMD curl -f http://localhost:8080/api/v1/health || exit 1
+#HEALTHCHECK --start-period=30s \
+# CMD curl -f http://localhost:8080/api/v1/health || exit 1
