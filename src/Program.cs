@@ -17,6 +17,9 @@ foreach (DictionaryEntry environmentVariable in Environment.GetEnvironmentVariab
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+Console.WriteLine($"Redis: {builder.Configuration.GetConnectionString("Redis")}");
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureHttpJsonOptions(options => { options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
