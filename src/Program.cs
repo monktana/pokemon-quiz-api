@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
@@ -7,6 +8,13 @@ using PokeQuiz.HealthChecks;
 using PokeQuiz.OpenApi;
 using PokeQuiz.Services;
 using PokeQuiz.Services.MessageHandler;
+
+// console.log
+foreach (DictionaryEntry environmentVariable in Environment.GetEnvironmentVariables())
+{
+    Console.WriteLine($"{environmentVariable.Key}={environmentVariable.Value}");
+}
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
