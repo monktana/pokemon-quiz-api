@@ -1,10 +1,10 @@
 ﻿# Use the .NET 8.0 SDK Docker image to build the project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ENV ConnectionStrings__Redis=${REDIS_CONNECTION_STRING}
-ENV Sentry__Dsn=${SENTRY_DSN}
-ENV Sentry__Debug=false
-ENV Sentry__TracesSampleRate=1
-ENV Sentry__ProfilesSampleRate=1
+ENV ConnectionStrings:Redis=${REDIS_CONNECTION_STRING}
+ENV Sentry:Dsn=${SENTRY_DSN}
+ENV Sentry:Debug=false
+ENV Sentry:TracesSampleRate=1
+ENV Sentry:ProfilesSampleRate=1
 WORKDIR /app
 # Copy everything
 COPY . ./
