@@ -1,7 +1,6 @@
 name: build, test and publish
 
 on:
-  workflow_dispatch:
   push:
     branches: [ "main" ]
 
@@ -40,6 +39,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [build]
     permissions:
       contents: read
@@ -79,8 +79,10 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           
+  
   deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [publish]
 
     steps:
