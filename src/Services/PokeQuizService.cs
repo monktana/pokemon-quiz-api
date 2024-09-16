@@ -1,3 +1,4 @@
+using System.Reflection;
 using PokeQuiz.Clients;
 using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
 using PokeAPIModels = PokeQuiz.Models.PokeApi;
@@ -105,13 +106,13 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
         var response = new List<PokeAPIModels.NamedApiResource<PokeAPIModels.Type>>();
         var types = typeof(PokeQuizModels.Types);
 
-        foreach (var property in types.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public))
+        foreach (var property in types.GetFields(BindingFlags.Static | BindingFlags.Public))
         {
             var value = property.GetValue(null);
             response.Add(new PokeAPIModels.NamedApiResource<PokeAPIModels.Type>
             {
                 Name = value?.ToString() ?? string.Empty,
-                Url = $"{Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}/api/v1/type/{value}"
+                Url = string.Empty
             });
         }
 
