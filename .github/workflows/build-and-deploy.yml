@@ -1,6 +1,8 @@
 name: build, test and publish
 
 on:
+  pull_request:
+    branches: [ "main" ]
   push:
     branches: [ "main" ]
 
