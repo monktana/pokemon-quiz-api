@@ -1,4 +1,5 @@
 using System.Net;
+using System.Reflection;
 using PokeQuiz.Services;
 using RichardSzalay.MockHttp;
 using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
@@ -196,7 +197,7 @@ public class PokeQuizServiceTests
     public async Task PokeQuizService_GetsAnOverviewOfAllTypes()
     {
         var typesResponse = await _pokeQuizService.GetTypes();
-        var pokemonTypes = typeof(PokeQuizModels.Types).GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+        var pokemonTypes = typeof(PokeQuizModels.Types).GetFields(BindingFlags.Static | BindingFlags.Public);
 
         Assert.Equal(pokemonTypes.Length, typesResponse.Count);
 
@@ -213,11 +214,15 @@ public class PokeQuizServiceTests
 
         Assert.IsType<PokeQuizModels.Matchup>(matchup);
 
+        Assert.NotNull(matchup.Team);
+        Assert.IsType<List<PokeQuizModels.Pokemon>>(matchup.Team);
+        Assert.True(matchup.Team.Count > 0);
+
         Assert.NotNull(matchup.Attacker);
         Assert.IsType<PokeQuizModels.Pokemon>(matchup.Attacker);
 
-        Assert.NotNull(matchup.Defender);
-        Assert.IsType<PokeQuizModels.Pokemon>(matchup.Defender);
+        Assert.NotNull(matchup.Opponent);
+        Assert.IsType<PokeQuizModels.Pokemon>(matchup.Opponent);
 
         Assert.NotNull(matchup.Move);
         Assert.IsType<PokeQuizModels.Move>(matchup.Move);
