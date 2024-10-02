@@ -1,5 +1,6 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using PokeQuiz.Extensions;
 
@@ -7,7 +8,8 @@ using PokeQuiz.Extensions;
 namespace PokeQuiz.Models.PokeQuiz;
 
 [ExcludeFromCodeCoverage]
-public class Move : IDeserializable<PokeApi.Move>
+[DebuggerDisplay("{Name} ({Id})")]
+public record struct Move : IDeserializable<PokeApi.Move>
 {
     /// <summary>
     /// The identifier for this resource.
@@ -34,6 +36,11 @@ public class Move : IDeserializable<PokeApi.Move>
     /// The type of this move.
     /// </summary>
     public Type Type { get; set; }
+
+    /// <summary>
+    /// Checks if the move is an attacking move.
+    /// </summary>
+    public bool IsAttackingMove => Power > 0;
 
     /// <summary>
     /// Maps a PokeApi.PokemonSpecies to a PokeQuiz.PokemonSpecies

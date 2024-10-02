@@ -1,5 +1,6 @@
 using System.Net;
 using System.Reflection;
+using Newtonsoft.Json;
 using PokeQuiz.Services;
 using RichardSzalay.MockHttp;
 using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
@@ -107,14 +108,11 @@ public class PokeQuizServiceTests
         Assert.Equal("pound", move.Name);
     }
 
-    [Fact]
-    public async Task PokeQuizService_GetsMultipleMovesByName()
+    [Theory]
+    [InlineData("pound", "tackle")]
+    public async Task PokeQuizService_GetsMultipleMovesByName(params string[] names)
     {
-        var moves = await _pokeQuizService.GetMoves(new List<string>
-        {
-            "pound",
-            "tackle",
-        });
+        var moves = await _pokeQuizService.GetMoves(names.ToList());
 
         Assert.IsType<PokeQuizModels.Move>(moves[0]);
         Assert.Equal(1, moves[0].Id);
@@ -124,7 +122,6 @@ public class PokeQuizServiceTests
         Assert.Equal(33, moves[1].Id);
         Assert.Equal("tackle", moves[1].Name);
     }
-
 
     [Fact]
     public async Task PokeQuizService_GetMoves_ThrowIfOneRequestFails()
@@ -182,7 +179,6 @@ public class PokeQuizServiceTests
         Assert.Equal("ghost", types[1].Name);
     }
 
-
     [Fact]
     public async Task PokeQuizService_GetTypes_ThrowIfOneRequestFails()
     {
@@ -215,11 +211,20 @@ public class PokeQuizServiceTests
         Assert.IsType<PokeQuizModels.Matchup>(matchup);
 
         Assert.NotNull(matchup.Team);
-        Assert.IsType<List<PokeQuizModels.Pokemon>>(matchup.Team);
         Assert.True(matchup.Team.Count > 0);
+        Assert.IsType<List<PokeQuizModels.TeamMember>>(matchup.Team);
+
+        foreach (var teamMember in matchup.Team)
+        {
+            Assert.NotNull(teamMember.Pokemon);
+            Assert.False(teamMember.Fainted);
+            Assert.IsType<PokeQuizModels.Pokemon>(teamMember.Pokemon);
+            Assert.Equal(4, teamMember.Pokemon.Moves.Count);
+        }
 
         Assert.NotNull(matchup.Attacker);
         Assert.IsType<PokeQuizModels.Pokemon>(matchup.Attacker);
+        Assert.Contains(matchup.Attacker.Id, matchup.Team.Select(teamMember => teamMember.Pokemon.Id));
 
         Assert.NotNull(matchup.Opponent);
         Assert.IsType<PokeQuizModels.Pokemon>(matchup.Opponent);
@@ -228,6 +233,32 @@ public class PokeQuizServiceTests
         Assert.IsType<PokeQuizModels.Move>(matchup.Move);
         Assert.True(matchup.Move.Power > 0);
 
-        Assert.Equal(PokeQuizModels.TypeEffectiveness.Effective, matchup.Effectiveness);
+        Assert.Null(matchup.Guess);
+    }
+
+    [Fact]
+    public async Task PokeQuizService_MarksAttackingPokemonAsFaintedWhenGuessIsIncorrect()
+    {
+        var matchup = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/matchup/matchup.json"));
+        var matchupObject = JsonConvert.DeserializeObject<PokeQuizModels.Matchup>(matchup);
+
+        matchupObject!.Guess = PokeQuizModels.TypeEffectiveness.NotVeryEffective;
+
+        var updatedMatchup = await _pokeQuizService.PostMatchup(matchupObject);
+
+        Assert.True(updatedMatchup.Team.First(teamMember => teamMember.Pokemon.Id == matchupObject.Attacker.Id).Fainted);
+    }
+
+    [Fact]
+    public async Task PokeQuizService_MarksAttackingPokemonAsFaintedWhenGuessIsInvalid()
+    {
+        var matchup = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/matchup/matchup.json"));
+        var matchupObject = JsonConvert.DeserializeObject<PokeQuizModels.Matchup>(matchup);
+
+        matchupObject!.Guess = null;
+
+        var updatedMatchup = await _pokeQuizService.PostMatchup(matchupObject);
+
+        Assert.True(updatedMatchup.Team.First(teamMember => teamMember.Pokemon.Id == matchupObject.Attacker.Id).Fainted);
     }
 }

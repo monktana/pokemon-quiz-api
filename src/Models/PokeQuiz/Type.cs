@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using PokeQuiz.Extensions;
 
@@ -11,7 +12,8 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// <remarks>The different type effectiveness are represented by <see cref="TypeEffectiveness"/></remarks>
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class Type : IDeserializable<PokeApi.Type>
+[DebuggerDisplay("{Name} ({Id})")]
+public record struct Type : IDeserializable<PokeApi.Type>
 {
     /// <summary>
     /// The identifier for this resource.
@@ -49,26 +51,26 @@ public class Type : IDeserializable<PokeApi.Type>
 /// <summary>
 /// Representation of all available types
 /// </summary>
-public static class Types
+public enum Types
 {
-    public static string Bug = "bug";
-    public static string Dark = "dark";
-    public static string Dragon = "dragon";
-    public static string Electric = "electric";
-    public static string Fairy = "fairy";
-    public static string Fighting = "fighting";
-    public static string Fire = "fire";
-    public static string Flying = "flying";
-    public static string Ghost = "ghost";
-    public static string Grass = "grass";
-    public static string Ground = "ground";
-    public static string Ice = "ice";
-    public static string Normal = "normal";
-    public static string Poison = "poison";
-    public static string Psychic = "psychic";
-    public static string Rock = "rock";
-    public static string Steel = "steel";
-    public static string Water = "water";
+    Bug,
+    Dark,
+    Dragon,
+    Electric,
+    Fairy,
+    Fighting,
+    Fire,
+    Flying,
+    Ghost,
+    Grass,
+    Ground,
+    Ice,
+    Normal,
+    Poison,
+    Psychic,
+    Rock,
+    Steel,
+    Water,
 }
 
 /// <summary>

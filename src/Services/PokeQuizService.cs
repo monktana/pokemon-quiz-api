@@ -1,4 +1,3 @@
-using System.Reflection;
 using PokeQuiz.Clients;
 using PokeQuizModels = PokeQuiz.Models.PokeQuiz;
 using PokeAPIModels = PokeQuiz.Models.PokeApi;
@@ -14,16 +13,19 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     private readonly PokeApiRestClient _restClient = new(httpClient);
 
     /// <summary>
-    /// Constructs a <see cref="PokeQuizModels.Matchup"/>.
+    /// Creates an initial <see cref="PokeQuizModels.Matchup"/>.
     /// </summary>
-    /// <returns>The matchup containing two <see cref="PokeQuizModels.Pokemon"/> and a <see cref="PokeQuizModels.Move"/></returns>
+    /// <returns>
+    /// The matchup containing a <see cref="PokeQuizModels.TeamMember">List of Team member</see>, an <see cref="PokeQuizModels.Pokemon">Attacker</see> and <see cref="PokeQuizModels.Pokemon">Defender</see>,
+    /// a <see cref="PokeQuizModels.Move">Move used by the Attacker</see> and an <see cref="PokeQuizModels.TypeEffectiveness">Effectiveness</see> of the move against the Defender
+    /// </returns>
     public async Task<PokeQuizModels.Matchup> GetMatchup()
     {
-        var team = await GetPokemonTeam();
-        var attacker = team[new Random().Next(team.Count)];
+        var team = await GetTeam();
+        var attacker = team[new Random().Next(team.Count)].Pokemon;
         var opponent = await GetPokemon((new Random().Next(151) + 1).ToString());
 
-        var move = GetRandomAttackingMove(attacker);
+        var move = attacker.Moves[new Random().Next(attacker.Moves.Count)];
         var effectiveness = typeService.CalculateEffectiveness(move.Type, opponent.Types);
 
         return new PokeQuizModels.Matchup
@@ -35,6 +37,29 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
             Guess = null,
             Effectiveness = effectiveness
         };
+    }
+
+    /// <summary>
+    /// Constructs a <see cref="PokeQuizModels.Matchup"/>.
+    /// </summary>
+    /// <returns>The matchup containing two <see cref="PokeQuizModels.Pokemon"/> and a <see cref="PokeQuizModels.Move"/></returns>
+    public async Task<PokeQuizModels.Matchup> PostMatchup(PokeQuizModels.Matchup matchup)
+    {
+        if (matchup.Guess is null || matchup.Guess != matchup.Effectiveness)
+        {
+            matchup.Team.Find(member => member.Pokemon.Id == matchup.Attacker.Id)!.Fainted = true;
+        }
+
+        var healthyMembers = matchup.Team.FindAll(member => !member.IsFainted);
+        matchup.Attacker = healthyMembers[new Random().Next(healthyMembers.Count)].Pokemon;
+        var opponent = await GetPokemon((new Random().Next(151) + 1).ToString());
+
+        matchup.Move = matchup.Attacker.Moves[new Random().Next(matchup.Attacker.Moves.Count)];
+
+        matchup.Effectiveness = typeService.CalculateEffectiveness(matchup.Move.Type, opponent.Types);
+        matchup.Guess = null;
+
+        return matchup;
     }
 
     /// <summary>
@@ -102,14 +127,12 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     public Task<List<PokeAPIModels.NamedApiResource<PokeAPIModels.Type>>> GetTypes()
     {
         var response = new List<PokeAPIModels.NamedApiResource<PokeAPIModels.Type>>();
-        var types = typeof(PokeQuizModels.Types);
 
-        foreach (var property in types.GetFields(BindingFlags.Static | BindingFlags.Public))
+        foreach (var value in Enum.GetValues<PokeQuizModels.Types>())
         {
-            var value = property.GetValue(null);
             response.Add(new PokeAPIModels.NamedApiResource<PokeAPIModels.Type>
             {
-                Name = value?.ToString() ?? string.Empty,
+                Name = value.ToString().ToLowerInvariant(),
                 Url = string.Empty
             });
         }
@@ -138,32 +161,35 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
     }
 
     /// <summary>
-    /// Get a team of <see cref="PokeQuizModels.Pokemon">Pokemon</see>.
+    /// Get a team of <see cref="PokeQuizModels.TeamMember">Pokemon</see>.
     /// </summary>
     /// <param name="size">The size of the team</param>
     /// <returns>A list of <see cref="PokeQuizModels.Pokemon">Pokemon</see></returns>
-    private async Task<List<PokeQuizModels.Pokemon>> GetPokemonTeam(int size = 6)
+    private async Task<List<PokeQuizModels.TeamMember>> GetTeam(int size = 6)
     {
-        var tasks = new List<Task<PokeQuizModels.Pokemon>>();
+        var tasks = new List<Task<PokeQuizModels.TeamMember>>();
         for (var i = 0; i < size; i++)
         {
-            tasks.Add(GetPokemon((new Random().Next(151) + 1).ToString()));
+            tasks.Add(GetTeamMember());
         }
 
         return (await Task.WhenAll(tasks)).ToList();
     }
 
     /// <summary>
-    /// Get a random attacking <see cref="PokeQuizModels.Move"/> learned by the provided <see cref="PokeQuizModels.Pokemon"/>
+    /// Get a <see cref="PokeQuizModels.TeamMember">Team Member</see>.
     /// </summary>
-    /// <param name="pokemon">The <see cref="PokeQuizModels.Pokemon"/> to get the move off</param>
-    /// <returns>The object representing the <see cref="PokeQuizModels.Move"/></returns>
-    private static PokeQuizModels.Move GetRandomAttackingMove(PokeQuizModels.Pokemon pokemon)
+    /// <returns>A <see cref="PokeQuizModels.TeamMember">TeamMember</see> containing a <see cref="PokeQuizModels.Pokemon"/> and its state</returns>
+    private async Task<PokeQuizModels.TeamMember> GetTeamMember()
     {
-        var attackingMoves = pokemon.Moves.FindAll(move => move.Power > 0).ToArray();
-        var random = new Random().Next(attackingMoves.Length);
+        var pokemon = await GetPokemon((new Random().Next(151) + 1).ToString());
+        pokemon.Moves = pokemon.Moves.FindAll(move => move.IsAttackingMove).Take(4).ToList();
 
-        return attackingMoves[random];
+        return new PokeQuizModels.TeamMember
+        {
+            Pokemon = pokemon,
+            Fainted = false
+        };
     }
 
     /// <summary>
