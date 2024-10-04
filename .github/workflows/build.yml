@@ -60,6 +60,6 @@ jobs:
       with:
         context: ./src
         push: true
-        tags: ${{ github.sha }}
+        tags: ${{ github.repository }}:${{ github.sha }}
         labels: ${{ steps.meta.outputs.labels }}
         
