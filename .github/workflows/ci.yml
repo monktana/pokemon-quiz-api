@@ -1,0 +1,19 @@
+on:
+  pull_request:
+  push:
+    
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    
+  deploy-dev:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: dev
+  
+  deploy-prod:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: prod
