@@ -2,7 +2,7 @@
 
 services:
   pokemon-quiz-api:
-    image: ghcr.io/pokemon-quiz-api:dev
+    image: ghcr.io/pokemon-quiz-api:development
     environment:
       - ConnectionStrings:Redis=redis:6379
       - Sentry:Debug=false
