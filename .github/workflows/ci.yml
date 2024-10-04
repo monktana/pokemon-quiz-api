@@ -10,6 +10,7 @@ jobs:
     
   deploy-dev:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions: write-all
     needs: build
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
@@ -18,6 +19,7 @@ jobs:
   
   deploy-prod:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions: write-all
     needs: deploy-dev
     uses: ./.github/workflows/deploy.yml
     secrets: inherit

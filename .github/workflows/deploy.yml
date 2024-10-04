@@ -12,7 +12,6 @@ jobs:
   
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    permissions: write-all
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
