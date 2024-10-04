@@ -19,6 +19,13 @@ jobs:
       name: ${{ inputs.environment }}
 
     steps:
+      # fetch docker image with current hash as tag and push it as environment tag
+      - name: Re-tag Docker image
+        id: reTagImage
+        run: |
+          docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:${{ inputs.environment }}
+          docker push ghcr.io/${{ github.repository }}:${{ inputs.environment }}
       - name: Deploy on Coolify
         id: deployRequest
         uses: fjogeleit/http-request-action@v1
