@@ -12,6 +12,7 @@ jobs:
   
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions: write-all
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
@@ -30,6 +31,7 @@ jobs:
           docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
           docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:${{ inputs.environment }}
           docker push ghcr.io/${{ github.repository }}:${{ inputs.environment }}
+          
       - name: Deploy on Coolify
         id: deployRequest
         uses: fjogeleit/http-request-action@v1
