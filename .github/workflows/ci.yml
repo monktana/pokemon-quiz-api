@@ -9,12 +9,14 @@ jobs:
     
   deploy-dev:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build
     uses: ./.github/workflows/deploy.yml
     with:
       environment: dev
   
   deploy-prod:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: deploy-dev
     uses: ./.github/workflows/deploy.yml
     with:
       environment: prod
