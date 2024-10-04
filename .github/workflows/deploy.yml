@@ -1,4 +1,4 @@
-name: build and publish
+name: deploy
 
 on:
   pull_request:
