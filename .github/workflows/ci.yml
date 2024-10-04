@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
     with:
-      environment: dev
+      environment: development
   
   deploy-prod:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -24,4 +24,4 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
     with:
-      environment: prod
+      environment: production
