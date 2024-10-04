@@ -17,7 +17,13 @@ jobs:
       name: ${{ inputs.environment }}
 
     steps:
-      # fetch docker image with current hash as tag and push it as environment tag
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        
       - name: Re-tag Docker image
         id: reTagImage
         run: |
