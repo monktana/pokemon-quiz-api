@@ -1,0 +1,14 @@
+﻿version: "3.8"
+
+services:
+  pokemon-quiz-api:
+    image: ghcr.io/monktana/pokemon-quiz-api:development
+    environment:
+      - ConnectionStrings:Redis=redis:6379
+      - Sentry:Debug=false
+      - Sentry:TracesSampleRate=0.5
+      - Sentry:ProfilesSampleRate=1
+    depends_on:
+      - redis
+  redis:
+    image: "redis:alpine"
