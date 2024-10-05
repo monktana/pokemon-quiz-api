@@ -2,7 +2,7 @@
 
 services:
   pokemon-quiz-api:
-    image: ghcr.io/monktana/pokemon-quiz-api:production
+    image: ghcr.io/monktana/pokemon-quiz-api:development
     environment:
       - ConnectionStrings:Redis=redis:6379
       - Sentry:Debug=false
