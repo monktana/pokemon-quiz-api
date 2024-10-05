@@ -12,6 +12,12 @@ public interface IPokeQuizService
     Task<PokeQuizModels.Matchup> GetMatchup();
 
     /// <summary>
+    /// Constructs a <see cref="PokeQuizModels.Matchup"/>.
+    /// </summary>
+    /// <returns>The matchup containing two <see cref="PokeQuizModels.Pokemon"/> and a <see cref="PokeQuizModels.Move"/></returns>
+    Task<PokeQuizModels.Matchup> PostMatchup(PokeQuizModels.Matchup matchup);
+
+    /// <summary>
     /// Get a <see cref="PokeQuizModels.Pokemon"/> by name.
     /// </summary>
     /// <param name="name">The name of the <see cref="PokeQuizModels.Pokemon"/></param>

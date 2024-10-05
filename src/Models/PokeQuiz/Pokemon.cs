@@ -5,6 +5,7 @@
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using PokeQuiz.Extensions;
@@ -15,7 +16,7 @@ namespace PokeQuiz.Models.PokeQuiz;
 /// Pokémon sprite information
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class PokemonSprites : IDeserializable<PokeApi.PokemonSprites>
+public record struct PokemonSprites : IDeserializable<PokeApi.PokemonSprites>
 {
     /// <summary>
     /// The default depiction of this Pokémon from the front in battle.
@@ -91,7 +92,7 @@ public class PokemonSprites : IDeserializable<PokeApi.PokemonSprites>
 /// Wormadam-Sandy and Wormadam-Plant.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class PokemonSpecies : IDeserializable<PokeApi.PokemonSpecies>
+public record struct PokemonSpecies : IDeserializable<PokeApi.PokemonSpecies>
 {
     /// <summary>
     /// The identifier for this resource.
@@ -134,7 +135,8 @@ public class PokemonSpecies : IDeserializable<PokeApi.PokemonSpecies>
 /// available abilities and typings.
 /// </summary>
 [ExcludeFromCodeCoverage]
-public class Pokemon
+[DebuggerDisplay("{Name} ({Id})")]
+public record struct Pokemon
 {
     /// <summary>
     /// The identifier for this resource.
