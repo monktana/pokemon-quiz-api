@@ -50,7 +50,7 @@ public class PokeQuizService(HttpClient httpClient, TypeEffectivenessService typ
             matchup.Team.Find(member => member.Pokemon.Id == matchup.Attacker.Id)!.Fainted = true;
         }
 
-        var healthyMembers = matchup.Team.FindAll(member => !member.IsFainted);
+        var healthyMembers = matchup.Team.FindAll(member => !member.Fainted);
         matchup.Attacker = healthyMembers[new Random().Next(healthyMembers.Count)].Pokemon;
         var opponent = await GetPokemon((new Random().Next(151) + 1).ToString());
 
