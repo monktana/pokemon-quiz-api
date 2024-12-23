@@ -11,30 +11,38 @@ namespace PokeQuiz.UnitTests.Services;
 public class PokeQuizServiceTests
 {
     private readonly PokeQuizService _pokeQuizService;
-    private readonly TypeEffectivenessService _typeEffectivenessService = new(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/type", "PokemonTypeMatrix.json"));
+
+    private readonly TypeEffectivenessService _typeEffectivenessService = new(Path.Join(Directory.GetCurrentDirectory(),
+        "../../../Fixtures/type", "PokemonTypeMatrix.json"));
 
     public PokeQuizServiceTests()
     {
         var mockHttp = new MockHttpMessageHandler();
         {
-            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon/bulbasaur.json"));
+            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(),
+                "../../../Fixtures/pokemon/bulbasaur.json"));
             mockHttp.When("https://pokeapi.co/api/v2/pokemon/*").Respond("application/json", response);
         }
         {
-            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/pokemon-species/bulbasaur.json"));
+            var response = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(),
+                "../../../Fixtures/pokemon-species/bulbasaur.json"));
             mockHttp.When("https://pokeapi.co/api/v2/pokemon-species/*").Respond("application/json", response);
         }
         {
-            var tackle = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/move/tackle.json"));
-            var pound = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/move/pound.json"));
+            var tackle =
+                File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/move/tackle.json"));
+            var pound = File.ReadAllText(
+                Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/move/pound.json"));
 
             mockHttp.When("https://pokeapi.co/api/v2/move/tackle").Respond("application/json", tackle);
             mockHttp.When("https://pokeapi.co/api/v2/move/snasen").Respond(HttpStatusCode.NotFound);
             mockHttp.When("https://pokeapi.co/api/v2/move/*").Respond("application/json", pound);
         }
         {
-            var normal = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/type/normal.json"));
-            var ghost = File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/type/ghost.json"));
+            var normal =
+                File.ReadAllText(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/type/normal.json"));
+            var ghost = File.ReadAllText(
+                Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/type/ghost.json"));
 
             mockHttp.When("https://pokeapi.co/api/v2/type/ghost").Respond("application/json", ghost);
             mockHttp.When("https://pokeapi.co/api/v2/type/snasen").Respond(HttpStatusCode.NotFound);
@@ -126,11 +134,12 @@ public class PokeQuizServiceTests
     [Fact]
     public async Task PokeQuizService_GetMoves_ThrowIfOneRequestFails()
     {
-        var exceptions = await Assert.ThrowsAsync<AggregateException>(async () => await _pokeQuizService.GetMoves(new List<string>
-        {
-            "pound",
-            "snasen",
-        }));
+        var exceptions = await Assert.ThrowsAsync<AggregateException>(async () => await _pokeQuizService.GetMoves(
+            new List<string>
+            {
+                "pound",
+                "snasen",
+            }));
 
         Assert.Contains(exceptions.InnerExceptions, exception => exception is HttpRequestException);
     }
@@ -216,20 +225,14 @@ public class PokeQuizServiceTests
 
         foreach (var teamMember in matchup.Team)
         {
-            Assert.NotNull(teamMember.Pokemon);
             Assert.False(teamMember.Fainted);
             Assert.IsType<PokeQuizModels.Pokemon>(teamMember.Pokemon);
             Assert.Equal(4, teamMember.Pokemon.Moves.Count);
         }
 
-        Assert.NotNull(matchup.Attacker);
         Assert.IsType<PokeQuizModels.Pokemon>(matchup.Attacker);
         Assert.Contains(matchup.Attacker.Id, matchup.Team.Select(teamMember => teamMember.Pokemon.Id));
-
-        Assert.NotNull(matchup.Opponent);
         Assert.IsType<PokeQuizModels.Pokemon>(matchup.Opponent);
-
-        Assert.NotNull(matchup.Move);
         Assert.IsType<PokeQuizModels.Move>(matchup.Move);
         Assert.True(matchup.Move.Power > 0);
 
@@ -239,26 +242,30 @@ public class PokeQuizServiceTests
     [Fact]
     public async Task PokeQuizService_MarksAttackingPokemonAsFaintedWhenGuessIsIncorrect()
     {
-        var matchup = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/matchup/matchup.json"));
+        var matchup = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(),
+            "../../../Fixtures/matchup/matchup.json"));
         var matchupObject = JsonConvert.DeserializeObject<PokeQuizModels.Matchup>(matchup);
 
-        matchupObject!.Guess = PokeQuizModels.TypeEffectiveness.NotVeryEffective;
+        matchupObject.Guess = PokeQuizModels.TypeEffectiveness.NotVeryEffective;
 
         var updatedMatchup = await _pokeQuizService.PostMatchup(matchupObject);
 
-        Assert.True(updatedMatchup.Team.First(teamMember => teamMember.Pokemon.Id == matchupObject.Attacker.Id).Fainted);
+        Assert.True(updatedMatchup.Team.First(teamMember => teamMember.Pokemon.Id == matchupObject.Attacker.Id)
+            .Fainted);
     }
 
     [Fact]
     public async Task PokeQuizService_MarksAttackingPokemonAsFaintedWhenGuessIsInvalid()
     {
-        var matchup = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(), "../../../Fixtures/matchup/matchup.json"));
+        var matchup = await File.ReadAllTextAsync(Path.Join(Directory.GetCurrentDirectory(),
+            "../../../Fixtures/matchup/matchup.json"));
         var matchupObject = JsonConvert.DeserializeObject<PokeQuizModels.Matchup>(matchup);
 
-        matchupObject!.Guess = null;
+        matchupObject.Guess = null;
 
         var updatedMatchup = await _pokeQuizService.PostMatchup(matchupObject);
 
-        Assert.True(updatedMatchup.Team.First(teamMember => teamMember.Pokemon.Id == matchupObject.Attacker.Id).Fainted);
+        Assert.True(updatedMatchup.Team.First(teamMember => teamMember.Pokemon.Id == matchupObject.Attacker.Id)
+            .Fainted);
     }
 }

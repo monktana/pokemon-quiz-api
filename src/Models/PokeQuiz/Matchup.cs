@@ -22,11 +22,6 @@ public class TeamMember
     /// The opposing <see cref="Pokemon"/>.
     /// </summary>
     public bool Fainted { get; set; }
-
-    /// <summary>
-    /// Check if TeamMember is fainted.
-    /// </summary>
-    public bool IsFainted => Fainted;
 };
 
 /// <summary>

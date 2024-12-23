@@ -491,8 +491,7 @@
           }
         ]
       },
-      "fainted": false,
-      "isFainted": false
+      "fainted": false
     },
     {
       "pokemon": {
@@ -985,8 +984,7 @@
           }
         ]
       },
-      "fainted": false,
-      "isFainted": false
+      "fainted": false
     },
     {
       "pokemon": {
@@ -1479,8 +1477,7 @@
           }
         ]
       },
-      "fainted": false,
-      "isFainted": false
+      "fainted": false
     },
     {
       "pokemon": {
@@ -2019,8 +2016,7 @@
           }
         ]
       },
-      "fainted": false,
-      "isFainted": false
+      "fainted": false
     },
     {
       "pokemon": {
@@ -2559,8 +2555,7 @@
           }
         ]
       },
-      "fainted": false,
-      "isFainted": false
+      "fainted": false
     },
     {
       "pokemon": {
@@ -3053,8 +3048,7 @@
           }
         ]
       },
-      "fainted": false,
-      "isFainted": false
+      "fainted": false
     }
   ],
   "attacker": {
